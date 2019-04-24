@@ -1,0 +1,31 @@
+$primary: #009999
+$footer-background-color: white
+$footer-padding: 3rem 1.5rem 1.5rem
+$navbar-breakpoint: 769px
+
+@import "../../node_modules/bulma/bulma"
+
+.container
+  &.is-tablet
+    max-width: $tablet - (2 * $gap)
+
+// hide scrollbar when not required
+.select
+  select[multiple]
+    overflow: hidden
+  select[multiple]:not(:focus):before
+    content: 'Select multiple'
+    padding-left: calc(0.625em - 1px)
+    color: $input-placeholder-color
+    line-height: 2.2
+.select
+	select[multiple]:focus
+      overflow: auto
+
+select:not([multiple]):required:invalid
+  color: $input-placeholder-color
+select:not([multiple])
+  option[value=""][disabled]
+    display: none
+option:not([disabled])
+  color: black

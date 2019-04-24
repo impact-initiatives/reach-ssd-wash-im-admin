@@ -1,0 +1,51 @@
+{
+  "name": "reach-ssd-wash-im",
+  "description": "REACH South Sudan WASH IM",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Maxym Malynowsky <maxym.malynowsky@reach-initiative.org>",
+  "scripts": {
+    "build": "rm -rf .cache && rm -rf public && gatsby build",
+    "deploy": "npm run build && netlify deploy",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "format": "prettier --write \"src/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src",
+    "upgrade": "npm-upgrade"
+  },
+  "dependencies": {
+    "aws-amplify": "^1.1.26",
+    "bulma": "^0.7.4",
+    "gatsby": "^2.3.27",
+    "gatsby-plugin-manifest": "^2.0.29",
+    "gatsby-plugin-offline": "^2.0.25",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-sass": "^2.0.11",
+    "gatsby-source-filesystem": "^2.0.31",
+    "gatsby-transformer-remark": "^2.3.10",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.0",
+    "react-icons": "^3.6.1",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-inline-react-svg": "^1.1.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "fsevents": "^2.0.6",
+    "node-sass": "^4.11.0",
+    "prettier": "^1.17.0",
+    "typescript": "^3.4.4"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/impact-initiatives/reach-ssd-wash-im"
+  }
+}
