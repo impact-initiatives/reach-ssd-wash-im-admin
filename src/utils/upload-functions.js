@@ -1,4 +1,4 @@
-import { Storage } from 'aws-amplify';
+import Storage from '@aws-amplify/storage';
 
 const customRequest = ({ onSuccess, onProgress, onError, file }) => {
   const year = new Date().toISOString().slice(0, 4);

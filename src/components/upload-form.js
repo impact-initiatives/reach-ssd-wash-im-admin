@@ -1,32 +1,33 @@
 import React from 'react';
-import { Auth, API, graphqlOperation, Storage } from 'aws-amplify';
+// import { Auth, API, graphqlOperation, Storage }
+// import Storage from '@aws-amplify/storage';
 
 import { createDocument } from '../config/graphql/mutations';
 import getFormType from '../utils/get-form-type';
 import schema from '../config/schema/schema';
 
-const uploadDocument = (values, date) =>
-  Auth.currentAuthenticatedUser().then(user => {
-    const timestamp = Math.floor(date / 1000);
-    const variables = {
-      ...values,
-      createdAt: timestamp,
-      createdBy: user.attributes.email,
-      updatedAt: timestamp,
-      updatedBy: user.attributes.email,
-      status: 'DRAFT',
-    };
-    API.graphql(graphqlOperation(createDocument, variables))
-      .then(() => window.location.reload())
-      .catch(() => {});
-  });
+// const uploadDocument = (values, date) =>
+// Auth.currentAuthenticatedUser().then(user => {
+//   const timestamp = Math.floor(date / 1000);
+//   const variables = {
+//     ...values,
+//     createdAt: timestamp,
+//     createdBy: user.attributes.email,
+//     updatedAt: timestamp,
+//     updatedBy: user.attributes.email,
+//     status: 'DRAFT',
+//   };
+//   API.graphql(graphqlOperation(createDocument, variables))
+//     .then(() => window.location.reload())
+//     .catch(() => {});
+// });
 
-const uploadFile = (values, file) =>
-  Storage.put(`${values.file}`, file, {
-    contentType: file.type,
-    customPrefix: { public: 'files/' },
-    progressCallback({ loaded, total }) {},
-  });
+// const uploadFile = (values, file) =>
+//   Storage.put(`${values.file}`, file, {
+//     contentType: file.type,
+//     customPrefix: { public: 'files/' },
+//     progressCallback({ loaded, total }) {},
+//   });
 
 const handleSubmit = e => {
   e.preventDefault();
@@ -62,7 +63,7 @@ const handleSubmit = e => {
         .sort();
     }
   }
-  uploadFile(values, file).then(() => uploadDocument(values, date));
+  // uploadFile(values, file).then(() => uploadDocument(values, date));
 };
 
 const UploadForm = () => (

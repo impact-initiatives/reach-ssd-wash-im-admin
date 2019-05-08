@@ -1,4 +1,6 @@
-export const createDocument = `
+import gql from 'graphql-tag';
+
+export const createDocument = gql`
   mutation createDocument(
     $file: String!
     $title: String!
@@ -56,7 +58,7 @@ export const createDocument = `
   }
 `;
 
-export const updateDocument = `
+export const updateDocument = gql`
   mutation updateDocument(
     $id: ID!
     $file: String!
@@ -112,7 +114,7 @@ export const updateDocument = `
   }
 `;
 
-export const deleteDocument = `
+export const deleteDocument = gql`
   mutation deleteDocument($id: ID!) {
     deleteDocument(id: $id) {
       id

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API, graphqlOperation } from 'aws-amplify';
+// import { API, graphqlOperation } ';
 
 import store from '../utils/store';
 import getLabels from '../utils/get-labels';
@@ -12,12 +12,12 @@ import { listDocuments } from '../config/graphql/queries';
 
 const componentDidMount = (state, setState) => {
   if (!store.getState().edges.length) {
-    API.graphql(graphqlOperation(listDocuments)).then(({ data }) => {
-      const labeledEdges = getLabels(data.listDocuments);
-      const edges = labeledEdges.sort((a, b) => b.updatedAt - a.updatedAt);
-      setState({ ...state, loading: false, edges });
-      store.dispatch({ type: state => ({ ...state, edges }) });
-    });
+    // API.graphql(graphqlOperation(listDocuments)).then(({ data }) => {
+    //   const labeledEdges = getLabels(data.listDocuments);
+    //   const edges = labeledEdges.sort((a, b) => b.updatedAt - a.updatedAt);
+    //   setState({ ...state, loading: false, edges });
+    //   store.dispatch({ type: state => ({ ...state, edges }) });
+    // });
   }
 };
 
@@ -27,7 +27,7 @@ const AdminForm = () => {
     loading: true,
     edges: store.getState().edges,
   });
-  useEffect(() => componentDidMount(state, setState), []);
+  useEffect(() => componentDidMount(state, setState), [state]);
   return (
     <div>
       {state.edges.some(edge => edge.status === 'Published') ? <div /> : null}

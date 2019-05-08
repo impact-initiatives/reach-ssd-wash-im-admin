@@ -1,4 +1,6 @@
-export const onDeltaDocument = `
+import gql from 'graphql-tag';
+
+export const onDeltaDocument = gql`
   subscription onDeltaDocument {
     onDeltaDocument {
       id

@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'South Sudan WASH Platform',
-    description: '',
+    title: 'South Sudan WASH Platform (Admin)',
+    description: 'A repository of documents by the WASH cluster in South Sudan',
     author: '@maxmalynowsky',
   },
   plugins: [
@@ -20,13 +20,24 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'images',
+        path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         name: 'markdown',
         path: `${__dirname}/src/markdown`,
       },
     },
+    'gatsby-plugin-netlify',
     'gatsby-plugin-offline',
-    'gatsby-plugin-sass',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-react-svg',
+    'gatsby-plugin-sass',
+    'gatsby-plugin-sharp',
     'gatsby-transformer-remark',
+    'gatsby-transformer-sharp',
   ],
 };

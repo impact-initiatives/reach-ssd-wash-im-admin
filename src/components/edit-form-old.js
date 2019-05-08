@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Auth, API, graphqlOperation } from 'aws-amplify';
+// import { Auth, API, graphqlOperation };
 import { Form, Button, Divider, Row, Col, Radio, Popconfirm } from 'antd';
 
 import { updateDocument } from '../config/graphql/mutations';
@@ -26,18 +26,18 @@ const handleSubmit = (e, form, initialValues) => {
   e.preventDefault();
   form.validateFields((err, values) => {
     if (!err) {
-      Auth.currentAuthenticatedUser().then(user => {
-        const variables = {
-          ...initialValues,
-          ...values,
-          file: values.file.file.response.key,
-          updatedAt: Math.floor(Date.now() / 1000),
-          updatedBy: user.attributes.email,
-        };
-        API.graphql(graphqlOperation(updateDocument, variables))
-          .then(() => window.location.assign('/admin'))
-          .catch(() => {});
-      });
+      // Auth.currentAuthenticatedUser().then(user => {
+      //   const variables = {
+      //     ...initialValues,
+      //     ...values,
+      //     file: values.file.file.response.key,
+      //     updatedAt: Math.floor(Date.now() / 1000),
+      //     updatedBy: user.attributes.email,
+      //   };
+      //   API.graphql(graphqlOperation(updateDocument, variables))
+      //     .then(() => window.location.assign('/admin'))
+      //     .catch(() => {});
+      // });
     }
   });
 };
@@ -45,24 +45,24 @@ const handleSubmit = (e, form, initialValues) => {
 const handleDelete = (form, initialValues) => {
   form.validateFields((err, values) => {
     if (!err) {
-      Auth.currentAuthenticatedUser().then(user => {
-        const variables = {
-          ...initialValues,
-          ...values,
-          file: values.file.file.response.key,
-          updatedAt: Math.floor(Date.now() / 1000),
-          updatedBy: user.attributes.email,
-        };
-        API.graphql(graphqlOperation(updateDocument, variables))
-          .then(() => window.location.assign('/admin'))
-          .catch(() => {});
-      });
+      // Auth.currentAuthenticatedUser().then(user => {
+      //   const variables = {
+      //     ...initialValues,
+      //     ...values,
+      //     file: values.file.file.response.key,
+      //     updatedAt: Math.floor(Date.now() / 1000),
+      //     updatedBy: user.attributes.email,
+      //   };
+      //   API.graphql(graphqlOperation(updateDocument, variables))
+      //     .then(() => window.location.assign('/admin'))
+      //     .catch(() => {});
+      // });
     }
   });
 };
 
 const UploadForm = ({ form, values, defaultFileList }) => {
-  useEffect(() => componentDidMount(form, values), [values]);
+  useEffect(() => componentDidMount(form, values), [form, values]);
   return (
     <Form layout="horizontal" onSubmit={e => handleSubmit(e, form, values)}>
       {Object.entries(schema).map(([key, value]) =>

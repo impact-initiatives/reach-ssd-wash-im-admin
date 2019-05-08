@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const onMouseDownSelect = (e, selectNode) => {
-  if (!e.shiftKey && !e.metaKey && !e.ctrlKey) {
-    e.preventDefault();
-    e.persist();
-    const { scrollTop } = selectNode;
-    e.target.selected = !e.target.selected;
-    selectNode.focus();
+const MOBILE_REG_EXP = /Mobile|iP(hone|od|ad)|Android/i;
+
+const onMouseDownSelect = (e, state, setState) => {
+  if (state.isMobile) return;
+  e.preventDefault();
+  e.persist();
+  const selectNode = e.currentTarget;
+  const { scrollTop } = selectNode;
+  if (state.modalActive) e.target.selected = !e.target.selected;
+  selectNode.focus();
+  setState({ ...state, modalActive: true });
+  setTimeout(() => {
+    selectNode.scrollTop = scrollTop;
     selectNode.dispatchEvent(new Event('change', { bubbles: true }));
-    setTimeout(() => (selectNode.scrollTop = scrollTop), 0);
-  }
+  }, 0);
 };
 
 const getOptionsLength = options =>
@@ -24,41 +29,26 @@ const getOptions = options =>
     typeof value === 'object' ? (
       <optgroup key={key} label={key}>
         {Object.entries(value).map(([key1, value1]) => (
-          <option
-            key={key1}
-            onMouseDown={e =>
-              onMouseDownSelect(e, e.target.parentNode.parentNode)
-            }
-            value={key1}
-          >
+          <option key={key1} value={key1}>
             {value1}
           </option>
         ))}
       </optgroup>
     ) : (
-      <option
-        key={key}
-        onMouseDown={e => onMouseDownSelect(e, e.target.parentNode)}
-        value={key}
-      >
+      <option key={key} value={key}>
         {value}
       </option>
     ),
   );
 
-const onChange = (e, state, setState) => {
+const onChangeSelect = (e, state, setState) => {
   const selectedOptions = [];
-  for (const option of e.target.selectedOptions) {
-    selectedOptions.push(option);
-  }
+  for (const option of e.target.selectedOptions) selectedOptions.push(option);
   setState({ ...state, selectedOptions });
 };
 
-const onClickDelete = (e, option, state, setState) => {
+const onClickDelete = (e, option, state, setState, selectElement) => {
   e.persist();
-  const selectElement =
-    e.target.parentNode.parentNode.parentNode.parentNode.firstChild.firstChild
-      .firstChild;
   for (const currentOption of selectElement.selectedOptions) {
     if (option === currentOption) {
       currentOption.selected = false;
@@ -69,47 +59,95 @@ const onClickDelete = (e, option, state, setState) => {
   }
 };
 
-const onFocus = (e, length) => (e.target.size = length);
-
-const onBlur = e => {
-  e.target.scrollTop = 0;
-  e.target.size = 1;
+const onClickModal = (e, state, setState) => {
+  setState({ ...state, modalActive: false });
 };
 
-const SelectMultiple = ({ name, value }) => {
-  const [state, setState] = useState({ select: null, selectedOptions: [] });
-  const optionsLength = Math.min(getOptionsLength(value.options), 8);
+const componentDidMount = (state, setState) => {
+  const isMobile = MOBILE_REG_EXP.test(navigator.userAgent);
+  setState({ ...state, isMobile });
+};
+
+const SelectMultiple = ({ name, value, onChangeFunc, onChangeArgs }) => {
+  const [state, setState] = useState({
+    selectedOptions: [],
+    modalActive: false,
+    isMobile: null,
+  });
+  useEffect(() => componentDidMount(state, setState), []);
+  const optionsLength = Math.min(getOptionsLength(value.options), 12);
+  const activeClass = state.modalActive ? ' is-active' : '';
+  const mobileClass = state.isMobile ? ' ua-mobile' : '';
   return (
-    <div>
-      <div className="field">
-        <div className="select is-multiple is-fullwidth">
-          <select
-            multiple
-            required={value.required}
-            size={1}
-            name={name}
-            onBlur={onBlur}
-            onFocus={e => onFocus(e, optionsLength)}
-            onChange={e => onChange(e, state, setState)}
-          >
-            {getOptions(value.options)}
-          </select>
+    <a className="box">
+      <div className={`modal${activeClass}${mobileClass}`}>
+        <div
+          className="modal-background"
+          onMouseDown={e => onClickModal(e, state, setState)}
+        />
+        <div className="modal-card">
+          <div className="select is-multiple is-fullwidth">
+            <select
+              multiple
+              required={value.required}
+              size={optionsLength}
+              name={name}
+              id={name}
+              onMouseDown={e => onMouseDownSelect(e, state, setState)}
+              onChange={e => {
+                onChangeSelect(e, state, setState);
+                onChangeFunc(e.target, ...onChangeArgs);
+              }}
+            >
+              {getOptions(value.options)}
+            </select>
+          </div>
+          <footer className="modal-card-foot">
+            <button
+              className="button is-link is-rounded"
+              onClick={e => onClickModal(e, state, setState)}
+            >
+              Ok
+            </button>
+          </footer>
         </div>
       </div>
-      <div className="field is-grouped is-grouped-multiline">
-        {state.selectedOptions.map(option => (
-          <div className="control" key={option.value}>
-            <div className="tags has-addons">
-              <span className="tag is-primary is-medium">{option.label}</span>
-              <a
-                className="tag is-delete is-medium"
-                onClick={e => onClickDelete(e, option, state, setState)}
-              />
+      {state.selectedOptions.length ? (
+        <div className="field is-grouped is-grouped-multiline">
+          {state.selectedOptions.map(option => (
+            <div className="control" key={option.value}>
+              {state.isMobile ? (
+                <span className="tag is-link is-medium">{option.label}</span>
+              ) : (
+                <div className="tags has-addons">
+                  <span className="tag is-link is-medium">{option.label}</span>
+                  <button
+                    className="button is-shadowless tag is-delete is-medium"
+                    onClick={e => {
+                      onClickDelete(
+                        e,
+                        option,
+                        state,
+                        setState,
+                        e.target.parentNode.parentNode.parentNode.parentNode
+                          .firstChild.lastChild.firstChild.firstChild,
+                      );
+                      onChangeFunc(
+                        e.target.parentNode.parentNode.parentNode.parentNode
+                          .firstChild.lastChild.firstChild.firstChild,
+                        ...onChangeArgs,
+                      );
+                    }}
+                  />
+                </div>
+              )}
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
+          ))}
+        </div>
+      ) : (
+        <div className="content has-text-grey-light">Select multiple</div>
+      )}
+    </a>
   );
 };
 

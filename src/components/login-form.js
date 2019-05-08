@@ -1,5 +1,5 @@
 import React from 'react';
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { FaLock, FaEnvelope } from 'react-icons/fa';
 
 const handleSubmit = e => {

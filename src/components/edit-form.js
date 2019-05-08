@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Auth, API, graphqlOperation } from 'aws-amplify';
+// import { Auth, API, graphqlOperation };
 
 // import { updateDocument } from '../config/graphql/mutations';
 // import getFormType from '../utils/get-form-type';
