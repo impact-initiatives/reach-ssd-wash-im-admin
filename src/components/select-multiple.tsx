@@ -6,6 +6,7 @@ const MOBILE_REG_EXP = /Mobile|iP(hone|od|ad)|Android/i;
 interface Props {
   name: string;
   value: Select | SelectGrouped;
+  defaultValue?: string[];
   onChangeFunc?: Function;
   onChangeArgs?: any[];
 }
@@ -81,9 +82,7 @@ const onChangeSelect = (
   state: State,
   setState: Function,
 ): void => {
-  const selectedOptions = [];
-  for (const option of Array.from(e.currentTarget.selectedOptions))
-    selectedOptions.push(option);
+  const selectedOptions = Array.from(e.currentTarget.selectedOptions);
   setState({ ...state, selectedOptions });
 };
 
@@ -113,12 +112,24 @@ const onClickModal = (state: State, setState: Function) => {
   setState({ ...state, modalActive: false });
 };
 
-const componentDidMount = (setState: Function) => {
+const componentDidMount = (
+  setState: Function,
+  selectElement: HTMLSelectElement | null,
+) => {
   const isMobile = MOBILE_REG_EXP.test(navigator.userAgent);
-  setState((state: State) => ({ ...state, isMobile }));
+  const selectedOptions = selectElement
+    ? Array.from(selectElement.selectedOptions)
+    : [];
+  setState((state: State) => ({ ...state, isMobile, selectedOptions }));
 };
 
-const SelectMultiple = ({ name, value, onChangeFunc, onChangeArgs }: Props) => {
+const SelectMultiple = ({
+  name,
+  value,
+  defaultValue,
+  onChangeFunc,
+  onChangeArgs,
+}: Props) => {
   const initialState: State = {
     selectedOptions: [],
     modalActive: false,
@@ -126,7 +137,7 @@ const SelectMultiple = ({ name, value, onChangeFunc, onChangeArgs }: Props) => {
   };
   const [state, setState] = useState(initialState);
   const selectElement = useRef<HTMLSelectElement>(null);
-  useEffect(() => componentDidMount(setState), []);
+  useEffect(() => componentDidMount(setState, selectElement.current), []);
   const optionsLength = Math.min(getOptionsLength(value.options), 12);
   const activeClass = state.modalActive ? ' is-active' : '';
   const mobileClass = state.isMobile ? ' ua-mobile' : '';
@@ -146,6 +157,7 @@ const SelectMultiple = ({ name, value, onChangeFunc, onChangeArgs }: Props) => {
               name={name}
               id={name}
               ref={selectElement}
+              defaultValue={defaultValue}
               onChange={e => {
                 onChangeSelect(e, state, setState);
                 if (onChangeFunc && onChangeArgs)
@@ -191,7 +203,7 @@ const SelectMultiple = ({ name, value, onChangeFunc, onChangeArgs }: Props) => {
                         selectElement.current,
                       );
                       if (onChangeFunc && onChangeArgs)
-                        onChangeFunc(e.currentTarget, ...onChangeArgs);
+                        onChangeFunc(selectElement.current, ...onChangeArgs);
                     }}
                   />
                 </div>

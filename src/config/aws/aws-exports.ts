@@ -1,3 +1,5 @@
+import { AUTH_TYPE } from 'aws-appsync';
+
 const awsExports = {
   Auth: {
     identityPoolId: 'eu-west-1:67b93f41-7b22-4d15-8d46-7c63867751eb',
@@ -14,7 +16,7 @@ const awsExports = {
   aws_appsync_graphqlEndpoint:
     'https://4wftryxpxbhahejnrqaimcngau.appsync-api.eu-west-1.amazonaws.com/graphql',
   aws_appsync_region: 'eu-west-1',
-  aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',
+  aws_appsync_authenticationType: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
 };
 
 export default awsExports;

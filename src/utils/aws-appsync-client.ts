@@ -1,6 +1,6 @@
 import Auth from '@aws-amplify/auth';
 import Storage from '@aws-amplify/storage';
-import AWSAppSyncClient, { buildSync } from 'aws-appsync';
+import AWSAppSyncClient, { buildSync, AUTH_TYPE } from 'aws-appsync';
 
 import awsExports from '../config/aws/aws-exports';
 import { listDocuments, listDocumentsDelta } from '../config/graphql/queries';
@@ -14,7 +14,7 @@ const client = new AWSAppSyncClient({
   url: awsExports.aws_appsync_graphqlEndpoint,
   region: awsExports.aws_appsync_region,
   auth: {
-    type: awsExports.aws_appsync_authenticationType,
+    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
     jwtToken: async () =>
       (await Auth.currentSession()).getIdToken().getJwtToken(),
   },

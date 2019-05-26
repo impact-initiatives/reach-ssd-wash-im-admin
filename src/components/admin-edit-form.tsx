@@ -1,26 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import EditForm from './edit-form';
+// import { updateDocument } from '../config/graphql/mutations';
+import getFormType from '../utils/get-form-type';
+import schema from '../config/schema/schema';
 
-interface State {
-  id: string;
+interface Props {
+  loading: boolean;
+  data: Data;
 }
 
-const componentDidMount = (setState: Function) => {
-  const id = window.location.hash.slice(1);
-  setState((state: State) => ({ ...state, id }));
-};
+const handleSubmit = () => {};
 
-const AdminEditForm = () => {
-  const [state, setState] = useState({
-    values: {},
-    defaultFieList: [],
-    id: '',
-  });
-  useEffect(() => componentDidMount(setState), []);
-  return (
-    <EditForm values={state.values} defaultFileList={state.defaultFieList} />
-  );
-};
+const AdminEditForm = ({ loading, data }: Props) => (
+  <form onSubmit={handleSubmit}>
+    {Object.keys(schema).map(groupKey =>
+      Object.keys(schema[groupKey]).map(key =>
+        getFormType(groupKey, key, data),
+      ),
+    )}
+    <div className="field is-grouped">
+      <div className="control">
+        <button className="button is-link" type="submit">
+          Submit
+        </button>
+      </div>
+      <p className="control">
+        <button className="button is-light" type="button">
+          Cancel
+        </button>
+      </p>
+    </div>
+  </form>
+);
 
 export default AdminEditForm;

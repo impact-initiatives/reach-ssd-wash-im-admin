@@ -13,6 +13,26 @@ export const typeLookup: StringLookup = {
   status: 'selectOne',
 };
 
+export const dataTpl: Data = {
+  id: '',
+  file: '',
+  title: '',
+  documentType: '',
+  fileType: '',
+  clusters: [],
+  organizations: [],
+  donors: [],
+  washTypes: [],
+  admin0: [],
+  admin1: [],
+  admin2: [],
+  status: '',
+  createdAt: 0,
+  createdBy: '',
+  updatedAt: 0,
+  updatedBy: '',
+};
+
 export const labeledDataTpl: LabeledData = {
   id: '',
   file: '',

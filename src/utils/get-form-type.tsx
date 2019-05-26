@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
-import schema from '../config/schema/schema';
+import schema, { dataTpl } from '../config/schema/schema';
 import SelectMultiple from '../components/select-multiple';
 
 const onChange = (
@@ -13,7 +13,7 @@ const onChange = (
   }
 };
 
-const upload = (key: string, value: Input) => {
+const upload = (key: string, value: Input, defaultValue: string) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const uploadDiv = useRef<HTMLDivElement>(null);
   return (
@@ -39,7 +39,7 @@ const upload = (key: string, value: Input) => {
               <span className="file-label">Choose a file…</span>
             </span>
             <span className="file-name" ref={uploadDiv}>
-              No file chosen
+              {defaultValue ? defaultValue.substring(8) : 'No file chosen'}
             </span>
           </label>
         </div>
@@ -48,7 +48,7 @@ const upload = (key: string, value: Input) => {
   );
 };
 
-const input = (key: string, value: Input) => (
+const input = (key: string, value: Input, defaultValue: string) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
       {value.label}
@@ -62,12 +62,13 @@ const input = (key: string, value: Input) => (
         placeholder={value.label}
         required={value.required}
         aria-required={value.required}
+        defaultValue={defaultValue}
       />
     </div>
   </div>
 );
 
-const selectOne = (key: string, value: Select) => (
+const selectOne = (key: string, value: Select, defaultValue: string) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
       {value.label}
@@ -79,7 +80,7 @@ const selectOne = (key: string, value: Select) => (
           aria-required={value.required}
           name={key}
           id={key}
-          defaultValue=""
+          defaultValue={defaultValue}
         >
           <option value="" disabled>
             Select one
@@ -95,40 +96,48 @@ const selectOne = (key: string, value: Select) => (
   </div>
 );
 
-const selectMultiple = (key: string, value: Select) => (
+const selectMultiple = (key: string, value: Select, defaultValue: string[]) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
       {value.label}
     </label>
     <div className="control">
-      <SelectMultiple name={key} value={value} />
+      <SelectMultiple name={key} value={value} defaultValue={defaultValue} />
     </div>
   </div>
 );
 
-const selectMultipleGrouped = (key: string, value: SelectGrouped) => (
+const selectMultipleGrouped = (
+  key: string,
+  value: SelectGrouped,
+  defaultValue: string[],
+) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
       {value.label}
     </label>
     <div className="control">
-      <SelectMultiple name={key} value={value} />
+      <SelectMultiple name={key} value={value} defaultValue={defaultValue} />
     </div>
   </div>
 );
 
-const getFormType = (groupKey: string, key: string) => {
+const getFormType = (groupKey: string, key: string, data: Data = dataTpl) => {
   switch (groupKey) {
     case 'upload':
-      return upload(key, schema.upload[key]);
+      return upload(key, schema.upload[key], data[key]);
     case 'input':
-      return input(key, schema.input[key]);
+      return input(key, schema.input[key], data[key]);
     case 'selectOne':
-      return selectOne(key, schema.selectOne[key]);
+      return selectOne(key, schema.selectOne[key], data[key]);
     case 'selectMultiple':
-      return selectMultiple(key, schema.selectMultiple[key]);
+      return selectMultiple(key, schema.selectMultiple[key], data[key]);
     case 'selectMultipleGrouped':
-      return selectMultipleGrouped(key, schema.selectMultipleGrouped[key]);
+      return selectMultipleGrouped(
+        key,
+        schema.selectMultipleGrouped[key],
+        data[key],
+      );
     default:
       return null;
   }
