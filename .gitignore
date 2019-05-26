@@ -56,7 +56,7 @@ typings/
 
 # gatsby files
 .cache/
-public
+public/
 
 # Mac files
 .DS_Store
@@ -69,3 +69,7 @@ yarn-error.log
 
 # Netlify files
 .netlify/
+
+# IDE files
+.idea/
+.vscode/

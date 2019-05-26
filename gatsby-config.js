@@ -37,6 +37,7 @@ module.exports = {
     'gatsby-plugin-react-svg',
     'gatsby-plugin-sass',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-typescript',
     'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
   ],

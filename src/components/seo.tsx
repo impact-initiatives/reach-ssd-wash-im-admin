@@ -2,7 +2,14 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 
-function SEO({ description, lang = 'en', meta = [], keywords = [], title }) {
+interface Props {
+  description?: string;
+  lang?: string;
+  keywords?: string[];
+  title: string;
+}
+
+const SEO = ({ description, lang = 'en', keywords = [], title }: Props) => {
   const { site } = useStaticQuery(graphql`
     query {
       site {
@@ -29,15 +36,13 @@ function SEO({ description, lang = 'en', meta = [], keywords = [], title }) {
         { name: 'twitter:creator', content: site.siteMetadata.author },
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: metaDescription },
-      ]
-        .concat(
-          keywords.length > 0
-            ? { name: 'keywords', content: keywords.join(', ') }
-            : [],
-        )
-        .concat(meta)}
+      ].concat(
+        keywords.length > 0
+          ? { name: 'keywords', content: keywords.join(', ') }
+          : [],
+      )}
     />
   );
-}
+};
 
 export default SEO;

@@ -2,10 +2,14 @@ import React from 'react';
 import Auth from '@aws-amplify/auth';
 import { FaLock, FaEnvelope } from 'react-icons/fa';
 
-const handleSubmit = e => {
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
-  const values = {};
-  for (const { name, value } of e.target.elements) values[name] = value;
+  const values = { email: '', password: '' };
+  for (const input of Array.from(e.currentTarget.elements)) {
+    const { name, value } = input as HTMLInputElement;
+    if (name === 'email') values.email = value;
+    if (name === 'password') values.password = value;
+  }
   Auth.signIn(values.email, values.password)
     .then(() => window.location.reload())
     .catch(() => {});

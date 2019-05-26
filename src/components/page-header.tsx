@@ -3,22 +3,28 @@ import { Link } from 'gatsby';
 
 import Logo from '../images/wash-icon.svg';
 
-const onClick = (state, setState) => {
-  setState({ ...state, menuOpen: !state.menuOpen });
-};
+interface Props {
+  tab: string;
+}
 
-const PageHeader = () => {
+interface State {
+  menuOpen: boolean;
+}
+
+const onClick = (state: State, setState: Function) =>
+  setState({ menuOpen: !state.menuOpen });
+
+const PageHeader = ({ tab }: Props) => {
   const [state, setState] = useState({ menuOpen: false });
   const isActive = state.menuOpen ? ' is-active' : '';
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <Link className="navbar-item" to="/">
+        <Link className="navbar-item" to="/" aria-label="Home page">
           <Logo style={{ height: 28 }} />
         </Link>
-        <a
-          role="button"
-          className={`navbar-burger burger${isActive}`}
+        <button
+          className={`button is-white navbar-burger burger${isActive}`}
           aria-label="menu"
           aria-expanded="false"
           onClick={() => onClick(state, setState)}
@@ -26,27 +32,44 @@ const PageHeader = () => {
           <span aria-hidden="true" />
           <span aria-hidden="true" />
           <span aria-hidden="true" />
-        </a>
+        </button>
       </div>
       <div className={`navbar-menu${isActive}`}>
         <div className="navbar-start">
-          <Link className="navbar-item" to="/">
+          <Link
+            className={`navbar-item is-tab${tab === '/' ? ' is-active' : ''}`}
+            to="/"
+            aria-label="Home page"
+          >
             Home
           </Link>
-          <Link className="navbar-item" to="/upload">
+          <Link
+            className={`navbar-item is-tab${
+              tab === '/upload' ? ' is-active' : ''
+            }`}
+            to="/upload"
+            aria-label="Upload files"
+          >
             Upload
           </Link>
-          <Link className="navbar-item" to="/admin">
+          <Link
+            className={`navbar-item is-tab${
+              tab === '/admin' ? ' is-active' : ''
+            }`}
+            to="/admin"
+            aria-label="Admin console"
+          >
             Admin
           </Link>
         </div>
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Link className="button is-light" to="/login">
-                Sign up
-              </Link>
-              <Link className="button is-primary" to="/login">
+              <Link
+                className="button is-primary is-rounded"
+                to="/login"
+                aria-label="Login page"
+              >
                 Login
               </Link>
             </div>

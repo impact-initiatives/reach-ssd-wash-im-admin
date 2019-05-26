@@ -7,7 +7,7 @@ import { listDocuments, listDocumentsDelta } from '../config/graphql/queries';
 
 if (typeof window === 'undefined') global.fetch = import('node-fetch');
 
-Auth.configure(awsExports.auth);
+Auth.configure(awsExports.Auth);
 Storage.configure(awsExports.AWSS3);
 
 const client = new AWSAppSyncClient({
