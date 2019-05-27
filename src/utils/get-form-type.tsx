@@ -28,7 +28,7 @@ const upload = (key: string, value: Input, defaultValue: string) => {
               className="file-input"
               type="file"
               name={key}
-              required={value.required}
+              required={defaultValue ? false : value.required}
               aria-required={value.required}
               onChange={e => onChange(e, uploadDiv.current)}
             />

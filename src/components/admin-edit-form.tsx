@@ -1,18 +1,16 @@
 import React from 'react';
 
-// import { updateDocument } from '../config/graphql/mutations';
 import getFormType from '../utils/get-form-type';
 import schema from '../config/schema/schema';
+import handleSubmit from '../utils/upload-functions';
 
 interface Props {
   loading: boolean;
   data: Data;
 }
 
-const handleSubmit = () => {};
-
 const AdminEditForm = ({ loading, data }: Props) => (
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={e => handleSubmit(e, data)}>
     {Object.keys(schema).map(groupKey =>
       Object.keys(schema[groupKey]).map(key =>
         getFormType(groupKey, key, data),
