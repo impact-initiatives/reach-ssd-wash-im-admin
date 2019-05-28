@@ -4348,7 +4348,7 @@ eslint-plugin-graphql@^3.0.3:
     graphql-config "^2.0.1"
     lodash "^4.11.1"
 
-eslint-plugin-import@^2.17.2, eslint-plugin-import@^2.9.0:
+eslint-plugin-import@^2.17.3, eslint-plugin-import@^2.9.0:
   version "2.17.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.17.3.tgz#00548b4434c18faebaba04b24ae6198f280de189"
   integrity sha512-qeVf/UwXFJbeyLbxuY8RgqDyEKCkqV7YC+E5S5uOjAp4tOc8zj01JP3ucoBM8JcEqd1qRasJSg6LLlisirfy0Q==
@@ -5271,7 +5271,7 @@ gatsby-graphiql-explorer@^0.1.0:
     react-dom "^16.8.6"
     whatwg-fetch "^3.0.0"
 
-gatsby-image@^2.1.0:
+gatsby-image@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/gatsby-image/-/gatsby-image-2.1.1.tgz#bbaca556dd90083fbc59d492807d12fb06435c42"
   integrity sha512-MPmFDyF7Sj8yycMcA0ngFSHSDvO0PU6Flini3tDz58v1GOcyD9Ks8asaYaEhdZaauPfIKfXmun32G+QMtwaotw==
@@ -5356,7 +5356,7 @@ gatsby-plugin-sass@^2.0.11:
     "@babel/runtime" "^7.0.0"
     sass-loader "^7.0.1"
 
-gatsby-plugin-sharp@^2.1.0:
+gatsby-plugin-sharp@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.1.1.tgz#a282ead8575466d0ee01e88ff65f7b32838c800a"
   integrity sha512-KPBygBMHgx3MIFUjKmcBsZOAKsiWbNPE+ATrZWcbthIv0tlrYQ0vlcmnx+yKDKoxZuBffixlC8d8RZn3YjtBpw==
@@ -5378,7 +5378,7 @@ gatsby-plugin-sharp@^2.1.0:
     sharp "^0.22.1"
     svgo "^1.2.0"
 
-gatsby-plugin-typescript@^2.0.14:
+gatsby-plugin-typescript@^2.0.15:
   version "2.0.15"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-typescript/-/gatsby-plugin-typescript-2.0.15.tgz#2c95e512287f8d4df02245152a94cf9601813e45"
   integrity sha512-ZOKEjz+VhDLT1Q8w33JmR2NUDYiYgThab7jFZQvEd9zWA9x70BZlFL5kMy6mhHXIkD6dhPwYN1WM1yWWRzkOjw==
@@ -5477,7 +5477,7 @@ gatsby-transformer-sharp@^2.1.19:
     semver "^5.6.0"
     sharp "^0.22.1"
 
-gatsby@^2.7.1:
+gatsby@^2.7.3:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-2.7.3.tgz#7e07d8265dfde76bccea47d18b6c2dc5548a6d77"
   integrity sha512-fbTt86Ms/TZHoO1hf3tNwsEgZhSyhU45C9OhINuiGnY3IjAwf7+/zWJjHOyF//l/OQE8IGK/SEJSSe9kA2AZfA==
@@ -6197,14 +6197,14 @@ hast-util-from-parse5@^4.0.2:
     xtend "^4.0.1"
 
 hast-util-is-element@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/hast-util-is-element/-/hast-util-is-element-1.0.2.tgz#c23c9428b6a5a4e323bf9e16f87417476314981b"
-  integrity sha512-4MEtyofNi3ZunPFrp9NpTQdNPN24xvLX3M+Lr/RGgPX6TLi+wR4/DqeoyQ7lwWcfUp4aevdt4RR0r7ZQPFbHxw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/hast-util-is-element/-/hast-util-is-element-1.0.3.tgz#423b4b26fe8bf1f25950fe052e9ce8f83fd5f6a4"
+  integrity sha512-C62CVn7jbjp89yOhhy7vrkSaB7Vk906Gtcw/Ihd+Iufnq+2pwOZjdPmpzpKLWJXPJBMDX3wXg4FqmdOayPcewA==
 
 hast-util-parse-selector@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/hast-util-parse-selector/-/hast-util-parse-selector-2.2.1.tgz#4ddbae1ae12c124e3eb91b581d2556441766f0ab"
-  integrity sha512-Xyh0v+nHmQvrOqop2Jqd8gOdyQtE8sIP9IQf7mlVDqp924W4w/8Liuguk2L2qei9hARnQSG2m+wAOCxM7npJVw==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/hast-util-parse-selector/-/hast-util-parse-selector-2.2.2.tgz#66aabccb252c47d94975f50a281446955160380b"
+  integrity sha512-jIMtnzrLTjzqgVEQqPEmwEZV+ea4zHRFTP8Z2Utw0I5HuBOXHzUPPQWr6ouJdJqDKLbFU/OEiYwZ79LalZkmmw==
 
 hast-util-raw@^4.0.0:
   version "4.0.0"
@@ -6248,9 +6248,9 @@ hast-util-to-parse5@^4.0.1:
     zwitch "^1.0.0"
 
 hast-util-whitespace@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/hast-util-whitespace/-/hast-util-whitespace-1.0.2.tgz#c97153a3fbc9091a14fd823830a47724e7a1da99"
-  integrity sha512-4JT8B0HKPHBMFZdDQzexjxwhKx9TrpV/+uelvmqlPu8RqqDrnNIEHDtDZCmgE+4YmcFAtKVPLmnY3dQGRaN53A==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/hast-util-whitespace/-/hast-util-whitespace-1.0.3.tgz#6d161b307bd0693b5ec000c7c7e8b5445109ee34"
+  integrity sha512-AlkYiLTTwPOyxZ8axq2/bCwRUPjIPBfrHkXuCR92B38b3lSdU22R5F/Z4DL6a2kxWpekWq1w6Nj48tWat6GeRA==
 
 hastscript@^4.0.0:
   version "4.1.0"
@@ -7963,16 +7963,16 @@ md5@^2.2.1:
     is-buffer "~1.1.1"
 
 mdast-util-compact@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/mdast-util-compact/-/mdast-util-compact-1.0.2.tgz#c12ebe16fffc84573d3e19767726de226e95f649"
-  integrity sha512-d2WS98JSDVbpSsBfVvD9TaDMlqPRz7ohM/11G0rp5jOBb5q96RJ6YLszQ/09AAixyzh23FeIpCGqfaamEADtWg==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mdast-util-compact/-/mdast-util-compact-1.0.3.tgz#98a25cc8a7865761a41477b3a87d1dcef0b1e79d"
+  integrity sha512-nRiU5GpNy62rZppDKbLwhhtw5DXoFMqw9UNZFmlPsNaQCZ//WLjGKUwWMdJrUH+Se7UvtO2gXtAMe0g/N+eI5w==
   dependencies:
     unist-util-visit "^1.1.0"
 
 mdast-util-definitions@^1.2.0:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/mdast-util-definitions/-/mdast-util-definitions-1.2.3.tgz#49f936b09207c45b438db19551652934312f04f0"
-  integrity sha512-P6wpRO8YVQ1iv30maMc93NLh7COvufglBE8/ldcOyYmk5EbfF0YeqlLgtqP/FOBU501Kqar1x5wYWwB3Nga74g==
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/mdast-util-definitions/-/mdast-util-definitions-1.2.4.tgz#2b54ad4eecaff9d9fcb6bf6f9f6b68b232d77ca7"
+  integrity sha512-HfUArPog1j4Z78Xlzy9Q4aHLnrF/7fb57cooTHypyGoe2XFNbcx/kWZDoOz+ra8CkUzvg3+VHV434yqEd1DRmA==
   dependencies:
     unist-util-visit "^1.0.0"
 
@@ -7994,9 +7994,9 @@ mdast-util-to-hast@^3.0.0:
     xtend "^4.0.1"
 
 mdast-util-to-nlcst@^3.2.0:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/mdast-util-to-nlcst/-/mdast-util-to-nlcst-3.2.2.tgz#71972eecd64dc03d5cf2713f08555e2d9e2d7d10"
-  integrity sha512-TmJlri8dHt7duRU6jfWBMqf5gW+VZ6o/8GHaWzwdxslseB2lL8bSOiox6c8VwYX5v2E4CzUWm/1GkAYqgbNw9A==
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/mdast-util-to-nlcst/-/mdast-util-to-nlcst-3.2.3.tgz#dcd0f51b59515b11a0700aeb40f168ed7ba9ed3d"
+  integrity sha512-hPIsgEg7zCvdU6/qvjcR6lCmJeRuIEpZGY5xBV+pqzuMOvQajyyF8b6f24f8k3Rw8u40GwkI3aAxUXr3bB2xag==
   dependencies:
     nlcst-to-string "^2.0.0"
     repeat-string "^1.5.2"
@@ -8004,9 +8004,9 @@ mdast-util-to-nlcst@^3.2.0:
     vfile-location "^2.0.0"
 
 mdast-util-to-string@^1.0.2, mdast-util-to-string@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/mdast-util-to-string/-/mdast-util-to-string-1.0.5.tgz#3552b05428af22ceda34f156afe62ec8e6d731ca"
-  integrity sha512-2qLt/DEOo5F6nc2VFScQiHPzQ0XXcabquRJxKMhKte8nt42o08HUxNDPk7tt0YPxnWjAT11I1SYi0X0iPnfI5A==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/mdast-util-to-string/-/mdast-util-to-string-1.0.6.tgz#7d85421021343b33de1552fc71cb8e5b4ae7536d"
+  integrity sha512-868pp48gUPmZIhfKrLbaDneuzGiw3OTDjHc5M1kAepR2CWBJ+HpEsm252K4aXdiP5coVZaJPOqGtVU6Po8xnXg==
 
 mdast-util-toc@^2.0.1:
   version "2.1.0"
@@ -8403,9 +8403,9 @@ nice-try@^1.0.4:
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
 nlcst-to-string@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/nlcst-to-string/-/nlcst-to-string-2.0.2.tgz#7125af4d4d369850c697192a658f01f36af9937b"
-  integrity sha512-DV7wVvMcAsmZ5qEwvX1JUNF4lKkAAKbChwNlIH7NLsPR7LWWoeIt53YlZ5CQH5KDXEXQ9Xa3mw0PbPewymrtew==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/nlcst-to-string/-/nlcst-to-string-2.0.3.tgz#b7913bb1305263b0561a86de68e179f17f7febe3"
+  integrity sha512-OY2QhGdf6jpYfHqS4vJwqF7aIBZkaMjMUkcHcskMPitvXLuYNGdQvgVWI/5yKwkmIdmhft3ounSJv+Re2yydng==
 
 node-abi@^2.7.0:
   version "2.8.0"
@@ -9901,9 +9901,9 @@ pseudomap@^1.0.1, pseudomap@^1.0.2:
   integrity sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
 
 psl@^1.1.24:
-  version "1.1.31"
-  resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.31.tgz#e9aa86d0101b5b105cbe93ac6b784cd547276184"
-  integrity sha512-/6pt4+C+T+wZUieKR620OpzN/LlnNKuWjy1iFLQ/UG35JqHlR/89MP1d96dUfkf6Dne3TuLQzOYEYshJ+Hx8mw==
+  version "1.1.32"
+  resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.32.tgz#3f132717cf2f9c169724b2b6caf373cf694198db"
+  integrity sha512-MHACAkHpihU/REGGPLj4sEfc/XKW2bheigvHO1dUqjaKigMp1C8+WLQYRGgeKFMsw5PMfegZcaN8IDXK/cD0+g==
 
 public-encrypt@^4.0.0:
   version "4.0.3"
