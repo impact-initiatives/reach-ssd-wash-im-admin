@@ -16,9 +16,10 @@ const AdminEditForm = ({ loading, data }: Props) => (
         getFormType(groupKey, key, data),
       ),
     )}
-    <div className="field is-grouped">
+    <br />
+    <div className="field is-grouped is-grouped-right">
       <div className="control">
-        <button className="button is-link" type="submit">
+        <button className="button is-primary" type="submit">
           Submit
         </button>
       </div>
