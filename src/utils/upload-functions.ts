@@ -14,7 +14,7 @@ interface ProgressCallback {
   total: number;
 }
 
-const createDocumentFunc = (values: Values, date: Date) =>
+const createDocumentFunc = (values: Values, date: Date, setState: Function) =>
   Auth.currentAuthenticatedUser().then(user => {
     const timestamp = Math.floor(date.getTime() / 1000);
     const variables = {
@@ -28,10 +28,15 @@ const createDocumentFunc = (values: Values, date: Date) =>
     client
       .mutate({ mutation: createDocument, variables })
       .then(() => window.location.assign('/admin'))
-      .catch(() => {});
+      .catch(() => setState({ loading: false }));
   });
 
-const updateDocumentFunc = (values: Values, date: Date, id: string) =>
+const updateDocumentFunc = (
+  values: Values,
+  date: Date,
+  setState: Function,
+  id: string,
+) =>
   Auth.currentAuthenticatedUser().then(user => {
     const timestamp = Math.floor(date.getTime() / 1000);
     const variables = {
@@ -43,7 +48,7 @@ const updateDocumentFunc = (values: Values, date: Date, id: string) =>
     client
       .mutate({ mutation: updateDocument, variables })
       .then(() => window.location.assign('/admin'))
-      .catch(() => {});
+      .catch(() => setState({ loading: false }));
   });
 
 const uploadFile = (values: Values, file: File) =>
@@ -55,8 +60,13 @@ const uploadFile = (values: Values, file: File) =>
     },
   });
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>, data?: Data) => {
+const handleSubmit = (
+  e: React.FormEvent<HTMLFormElement>,
+  setState: Function,
+  data?: Data,
+) => {
   e.preventDefault();
+  setState({ loading: true });
   let file: File = {
     lastModified: 0,
     name: '',
@@ -105,14 +115,16 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>, data?: Data) => {
   if (file && data) {
     values.file = `${year}/${month}/${file.name}`;
     uploadFile(values, file).then(() =>
-      updateDocumentFunc(values, date, data.id),
+      updateDocumentFunc(values, date, setState, data.id),
     );
   } else if (file) {
     values.file = `${year}/${month}/${file.name}`;
-    uploadFile(values, file).then(() => createDocumentFunc(values, date));
+    uploadFile(values, file).then(() =>
+      createDocumentFunc(values, date, setState),
+    );
   } else if (data) {
     values.file = data.file;
-    updateDocumentFunc(values, date, data.id);
+    updateDocumentFunc(values, date, setState, data.id);
   }
 };
 
