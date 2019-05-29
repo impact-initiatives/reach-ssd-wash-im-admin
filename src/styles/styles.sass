@@ -27,6 +27,10 @@ $modal-card-head-padding: 1rem
     option:checked::before
       content: "\2611"
 
+.select:not(.multiple)
+  select:invalid
+    color: $grey-light
+
 // Make table narrow on mobile
 .table
   +mobile
