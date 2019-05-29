@@ -2,13 +2,14 @@ import React, { useRef } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
 import schema, { dataTpl } from '../config/schema/schema';
+import awsExports from '../config/aws/aws-exports';
 import SelectMultiple from '../components/select-multiple';
 
 const onChange = (
   e: React.ChangeEvent<HTMLInputElement>,
   uploadDiv: HTMLDivElement | null,
 ) => {
-  if (e.currentTarget.files && uploadDiv) {
+  if (e.currentTarget.files && e.currentTarget.files[0] && uploadDiv) {
     uploadDiv.innerHTML = e.currentTarget.files[0].name;
   }
 };
@@ -39,7 +40,13 @@ const upload = (key: string, value: Input, defaultValue: string) => {
               <span className="file-label">Choose a file…</span>
             </span>
             <span className="file-name" ref={uploadDiv}>
-              {defaultValue ? defaultValue.substring(8) : 'No file chosen'}
+              {defaultValue ? (
+                <a href={awsExports.AWSS3.url + defaultValue}>
+                  {defaultValue.substring(8)}
+                </a>
+              ) : (
+                'No file chosen'
+              )}
             </span>
           </label>
         </div>
