@@ -1,4 +1,6 @@
 import React from 'react';
+import Auth from '@aws-amplify/auth';
+import { navigate } from 'gatsby';
 import { ApolloProvider } from 'react-apollo';
 import { Rehydrated } from 'aws-appsync-react';
 import './src/styles/styles.sass';
@@ -30,6 +32,12 @@ export const onServiceWorkerActive = () => removeProgressBar();
 export const onServiceWorkerUpdateFound = () => addProgressBar();
 
 export const onServiceWorkerUpdateReady = () => window.location.reload();
+
+export const onPreRouteUpdate = ({ location }) => {
+  Auth.currentAuthenticatedUser().catch(() => {
+    if (!location.pathname.startsWith('/login')) navigate('/login');
+  });
+};
 
 export const wrapRootElement = ({ element }) => (
   <ApolloProvider client={client}>

@@ -24,9 +24,9 @@ const AdminPage = () => (
     <section className="section">
       <div className="container">
         <Query query={listDocuments}>
-          {({ loading, data }: Props) => (
+          {({ loading, data: { listDocuments } }: Props) => (
             <AdminForm
-              data={applyLabels(data.listDocuments.sort(sort))}
+              data={listDocuments ? applyLabels(listDocuments.sort(sort)) : []}
               loading={loading}
             />
           )}

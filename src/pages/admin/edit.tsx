@@ -28,10 +28,10 @@ const UploadPage = () => {
       <section className="section">
         <div className="container is-tablet">
           <Query query={listDocuments}>
-            {({ loading, data }: Props) =>
+            {({ loading, data: { listDocuments } }: Props) =>
               id ? (
                 <AdminEditForm
-                  data={data.listDocuments.find(d => d.id === id) || dataTpl}
+                  data={listDocuments.find(d => d.id === id) || dataTpl}
                   loading={loading}
                 />
               ) : null
