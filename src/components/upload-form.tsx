@@ -12,13 +12,13 @@ const UploadForm = () => (
     <br />
     <div className="field is-grouped is-grouped-right">
       <div className="control">
-        <button className="button is-primary" type="submit">
+        <button className="button is-primary is-rounded" type="submit">
           Submit
         </button>
       </div>
       <p className="control">
         <button
-          className="button is-light"
+          className="button is-light is-rounded"
           type="button"
           onClick={() => navigate('/')}
         >

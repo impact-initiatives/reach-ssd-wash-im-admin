@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
+import Auth from '@aws-amplify/auth';
 
 import Logo from '../images/wash-icon.svg';
 
@@ -10,6 +11,9 @@ interface Props {
 interface State {
   menuOpen: boolean;
 }
+
+const onLogout = () =>
+  Auth.signOut().then(() => window.location.assign('/login'));
 
 const onClick = (state: State, setState: Function) =>
   setState({ menuOpen: !state.menuOpen });
@@ -65,13 +69,12 @@ const PageHeader = ({ tab }: Props) => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Link
+              <button
                 className="button is-primary is-rounded"
-                to="/login"
-                aria-label="Login page"
+                onClick={onLogout}
               >
-                Login
-              </Link>
+                Logout
+              </button>
             </div>
           </div>
         </div>

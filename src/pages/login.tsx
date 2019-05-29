@@ -2,13 +2,11 @@ import React from 'react';
 
 import SEO from '../components/seo';
 import LoginForm from '../components/login-form';
-import PageHeader from '../components/page-header';
 import PageFooter from '../components/page-footer';
 
 const LoginPage = () => (
   <section className="hero is-fullheight">
     <SEO title="Login" />
-    <PageHeader tab="/login" />
     <div className="hero-body">
       <div className="container">
         <div className="columns is-centered">

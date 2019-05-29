@@ -34,9 +34,13 @@ export const onServiceWorkerUpdateFound = () => addProgressBar();
 export const onServiceWorkerUpdateReady = () => window.location.reload();
 
 export const onPreRouteUpdate = ({ location }) => {
-  Auth.currentAuthenticatedUser().catch(() => {
-    if (!location.pathname.startsWith('/login')) navigate('/login');
-  });
+  Auth.currentAuthenticatedUser()
+    .then(() => {
+      if (location.pathname.startsWith('/login')) navigate('/');
+    })
+    .catch(() => {
+      if (!location.pathname.startsWith('/login')) navigate('/login');
+    });
 };
 
 export const wrapRootElement = ({ element }) => (

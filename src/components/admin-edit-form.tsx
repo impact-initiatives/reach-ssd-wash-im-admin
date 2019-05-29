@@ -19,12 +19,12 @@ const AdminEditForm = ({ loading, data }: Props) => (
     <br />
     <div className="field is-grouped is-grouped-right">
       <div className="control">
-        <button className="button is-primary" type="submit">
+        <button className="button is-primary is-rounded" type="submit">
           Submit
         </button>
       </div>
       <p className="control">
-        <button className="button is-light" type="button">
+        <button className="button is-light is-rounded" type="button">
           Cancel
         </button>
       </p>
