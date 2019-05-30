@@ -17,6 +17,10 @@ const awsExports = {
     'https://4wftryxpxbhahejnrqaimcngau.appsync-api.eu-west-1.amazonaws.com/graphql',
   aws_appsync_region: 'eu-west-1',
   aws_appsync_authenticationType: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+  route53: {
+    admin: 'https://wash-im-admin.reach-info.org',
+    public: 'https://wash-im.reach-info.org',
+  },
 };
 
 export default awsExports;

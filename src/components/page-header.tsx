@@ -3,6 +3,7 @@ import { Link } from 'gatsby';
 import Auth from '@aws-amplify/auth';
 
 import client from '../utils/aws-appsync-client';
+import awsConfig from '../config/aws/aws-exports';
 import Logo from '../images/wash-icon.svg';
 
 interface Props {
@@ -15,7 +16,9 @@ interface State {
 
 const onLogout = () =>
   Auth.signOut().then(() =>
-    client.resetStore().then(() => window.location.assign('/login')),
+    client
+      .resetStore()
+      .then(() => window.location.assign(awsConfig.route53.public)),
   );
 
 const onClick = (state: State, setState: Function) =>
