@@ -170,7 +170,6 @@ enum WashTypes {
 }
 
 type Query {
-  getDocument(id: ID!): Document
   listDocuments: [Document]
   listDocumentsDelta(lastSync: AWSTimestamp!): [Document]
 }
@@ -209,20 +208,11 @@ type Mutation {
     admin2: [Admin2!]!
     updatedAt: AWSTimestamp!
     updatedBy: AWSEmail!
-    status: Status!
   ): Document
-  deleteDocument(id: ID!): Document
-}
-
-type Subscription {
-  onDeltaDocument: Document
-    @aws_subscribe(
-      mutations: ["createDocument", "updateDocument", "deleteDocument"]
-    )
+  updateDocumentStatus(id: ID!, status: Status!): Document
 }
 
 schema {
   query: Query
   mutation: Mutation
-  subscription: Subscription
 }

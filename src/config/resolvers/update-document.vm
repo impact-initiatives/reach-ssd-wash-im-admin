@@ -7,11 +7,10 @@
     "id": { "S": "${ctx.args.id}" }
   },
   "update": {
-    "expression": "SET #documentFile = :file, title = :title, documentType = :documentType, fileType = :fileType, #documentClusters = :clusters, organizations = :organizations, donors = :donors, washTypes = :washTypes, admin0 = :admin0, admin1 = :admin1, admin2 = :admin2, updatedAt = :updatedAt, updatedBy = :updatedBy, #documentStatus = :status",
+    "expression": "SET #documentFile = :file, title = :title, documentType = :documentType, fileType = :fileType, #documentClusters = :clusters, organizations = :organizations, donors = :donors, washTypes = :washTypes, admin0 = :admin0, admin1 = :admin1, admin2 = :admin2, updatedAt = :updatedAt, updatedBy = :updatedBy",
     "expressionNames": {
       "#documentFile": "file",
-      "#documentClusters": "clusters",
-      "#documentStatus": "status"
+      "#documentClusters": "clusters"
     },
     "expressionValues": {
       ":file": { "S": "${ctx.args.file}" },
@@ -26,8 +25,7 @@
       ":admin1": $util.dynamodb.toDynamoDBJson($ctx.args.admin1),
       ":admin2": $util.dynamodb.toDynamoDBJson($ctx.args.admin2),
       ":updatedAt": { "N": "${ctx.args.updatedAt}" },
-      ":updatedBy": { "S": "${ctx.args.updatedBy}" },
-      ":status": { "S": "${ctx.args.status}" }
+      ":updatedBy": { "S": "${ctx.args.updatedBy}" }
     }
   }
 }

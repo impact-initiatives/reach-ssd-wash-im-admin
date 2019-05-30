@@ -17,7 +17,7 @@ interface State {
 const onLogout = () =>
   Auth.signOut().then(() =>
     client
-      .resetStore()
+      .clearStore()
       .then(() => window.location.assign(awsConfig.route53.public)),
   );
 

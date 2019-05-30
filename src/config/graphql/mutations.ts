@@ -74,7 +74,6 @@ export const updateDocument = gql`
     $admin2: [Admin2!]!
     $updatedAt: AWSTimestamp!
     $updatedBy: AWSEmail!
-    $status: Status!
   ) {
     updateDocument(
       id: $id
@@ -91,7 +90,6 @@ export const updateDocument = gql`
       admin2: $admin2
       updatedAt: $updatedAt
       updatedBy: $updatedBy
-      status: $status
     ) {
       id
       file
@@ -114,9 +112,9 @@ export const updateDocument = gql`
   }
 `;
 
-export const deleteDocument = gql`
-  mutation deleteDocument($id: ID!) {
-    deleteDocument(id: $id) {
+export const updateDocumentStatus = gql`
+  mutation updateDocumentStatus($id: ID!, $status: Status!) {
+    updateDocument(id: $id, status: $status) {
       id
       file
       title
