@@ -15,7 +15,12 @@ const handleSubmit = (
     if (name === 'password') values.password = value;
   }
   Auth.signIn(values.email, values.password)
-    .then(() => window.location.assign('/'))
+    .then(user => {
+      console.log(user);
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        Auth.completeNewPassword(user, values.password, {});
+      } else window.location.assign('/');
+    })
     .catch(({ code }) => {
       if (code === 'UserNotFoundException')
         setLoading({ loading: false, usernameErr: true, passwordErr: false });

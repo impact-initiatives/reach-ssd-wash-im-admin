@@ -1,3 +1,5 @@
+// CONFIGURE THE REQUEST MAPPING TEMPLATE
+
 {
   "version": "2017-02-28",
   "operation": "UpdateItem",
@@ -30,4 +32,6 @@
   }
 }
 
-// $util.toJson($ctx.result)
+// CONFIGURE THE RESPONSE MAPPING TEMPLATE
+
+$util.toJson($ctx.result)

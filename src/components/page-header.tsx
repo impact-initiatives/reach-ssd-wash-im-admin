@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import Auth from '@aws-amplify/auth';
 
+import client from '../utils/aws-appsync-client';
 import Logo from '../images/wash-icon.svg';
 
 interface Props {
@@ -13,7 +14,9 @@ interface State {
 }
 
 const onLogout = () =>
-  Auth.signOut().then(() => window.location.assign('/login'));
+  Auth.signOut().then(() =>
+    client.resetStore().then(() => window.location.assign('/login')),
+  );
 
 const onClick = (state: State, setState: Function) =>
   setState({ menuOpen: !state.menuOpen });

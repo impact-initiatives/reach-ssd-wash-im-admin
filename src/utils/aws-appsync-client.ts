@@ -20,13 +20,23 @@ const client = new AWSAppSyncClient({
   },
 });
 
-client.hydrated().then(() => {
+const clientSync = () =>
   client.sync(
     buildSync('Document', {
       baseQuery: { query: listDocuments },
       deltaQuery: { query: listDocumentsDelta },
     }),
   );
-});
+
+client.hydrated().then(() =>
+  Auth.currentAuthenticatedUser()
+    .then(() => {
+      const { data } = client.store.getCache().data;
+      if (Object.entries(data).length === 0)
+        client.query({ query: listDocuments }).then(() => clientSync());
+      else clientSync();
+    })
+    .catch(() => {}),
+);
 
 export default client;

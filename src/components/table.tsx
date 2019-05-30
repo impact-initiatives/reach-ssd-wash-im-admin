@@ -25,6 +25,7 @@ const Table = ({ data }: Props) => {
               <th>Document Type</th>
               <th>File Type</th>
               <th>Created</th>
+              <th>Updated</th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +40,13 @@ const Table = ({ data }: Props) => {
                 <td>{d.fileType.label}</td>
                 <td>
                   {new Date(d.createdAt * 1000).toLocaleString('en-GB', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit',
+                  })}
+                </td>
+                <td>
+                  {new Date(d.updatedAt * 1000).toLocaleString('en-GB', {
                     year: 'numeric',
                     month: 'short',
                     day: '2-digit',
