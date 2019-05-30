@@ -113,8 +113,18 @@ export const updateDocument = gql`
 `;
 
 export const updateDocumentStatus = gql`
-  mutation updateDocumentStatus($id: ID!, $status: Status!) {
-    updateDocument(id: $id, status: $status) {
+  mutation updateDocumentStatus(
+    $id: ID!
+    $updatedAt: AWSTimestamp!
+    $updatedBy: AWSEmail!
+    $status: Status!
+  ) {
+    updateDocumentStatus(
+      id: $id
+      updatedAt: $updatedAt
+      updatedBy: $updatedBy
+      status: $status
+    ) {
       id
       file
       title

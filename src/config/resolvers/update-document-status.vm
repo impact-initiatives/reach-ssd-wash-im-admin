@@ -1,0 +1,33 @@
+// CONFIGURE THE REQUEST MAPPING TEMPLATE
+
+#foreach($group in $ctx.identity.claims.get("cognito:groups"))
+  #if($group == "Admin")
+    #set($inCognitoGroup = true)
+  #end
+#end
+#if($inCognitoGroup)
+  {
+    "version": "2017-02-28",
+    "operation": "UpdateItem",
+    "key": {
+      "id": { "S": "${ctx.args.id}" }
+    },
+    "update": {
+      "expression": "SET updatedAt = :updatedAt, updatedBy = :updatedBy, #documentStatus = :status",
+      "expressionNames": {
+        "#documentStatus": "status"
+      },
+      "expressionValues": {
+        ":updatedAt": { "N": "${ctx.args.updatedAt}" },
+        ":updatedBy": { "S": "${ctx.args.updatedBy}" },
+        ":status": { "S": "${ctx.args.status}" }
+      }
+    }
+  }
+#else
+  $utils.unauthorized()
+#end
+
+// CONFIGURE THE RESPONSE MAPPING TEMPLATE
+
+$util.toJson($ctx.result)
