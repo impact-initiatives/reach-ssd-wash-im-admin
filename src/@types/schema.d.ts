@@ -46,3 +46,7 @@ interface Schema {
     [key: string]: Input | Select | SelectGrouped;
   };
 }
+
+interface SchemaHidden {
+  [key: string]: string | string[];
+}

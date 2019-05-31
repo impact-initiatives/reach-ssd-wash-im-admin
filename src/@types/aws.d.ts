@@ -1,15 +1,21 @@
 interface AwsExports {
   Auth: {
-    [key: string]: string;
+    identityPoolId: string;
+    region: string;
+    userPoolId: string;
+    userPoolWebClientId: string;
   };
   AWSS3: {
-    [key: string]: string;
+    bucket: string;
+    region: string;
+    level: string;
   };
   aws_appsync_graphqlEndpoint: string;
   aws_appsync_region: string;
   aws_appsync_authenticationType: string;
   route53: {
     admin: string;
+    files: string;
     public: string;
   };
 }

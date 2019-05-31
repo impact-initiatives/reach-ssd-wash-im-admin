@@ -3,9 +3,9 @@ type Option = {
   value: string;
 };
 
-type DataProp = string | number | string[];
+type DataProp = string | string[] | number;
 
-type LabeledDataProp = string | number | Option | Option[];
+type LabeledDataProp = string | string[] | number | Option | Option[];
 
 interface Data {
   id: string;
@@ -38,13 +38,13 @@ interface LabeledData {
   organizations: Option[];
   donors: Option[];
   washTypes: Option[];
-  admin0: Option[];
+  admin0: string[];
   admin1: Option[];
   admin2: Option[];
   createdAt: number;
   createdBy: string;
   updatedAt: number;
   updatedBy: string;
-  status: Option;
+  status: string;
   [key: string]: LabeledDataProp;
 }

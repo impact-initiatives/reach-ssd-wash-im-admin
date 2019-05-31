@@ -2,7 +2,7 @@ import Auth from '@aws-amplify/auth';
 import Storage from '@aws-amplify/storage';
 
 import { createDocument, updateDocument } from '../config/graphql/mutations';
-import schema from '../config/schema/schema';
+import schema, { schemaHidden } from '../config/schema/schema';
 import client from '../utils/aws-appsync-client';
 
 interface Values {
@@ -18,6 +18,7 @@ const createDocumentFunc = (values: Values, date: Date, setState: Function) =>
   Auth.currentAuthenticatedUser().then(user => {
     const timestamp = Math.floor(date.getTime() / 1000);
     const variables = {
+      ...schemaHidden,
       ...values,
       createdAt: timestamp,
       createdBy: user.attributes.email,
@@ -40,6 +41,7 @@ const updateDocumentFunc = (
   Auth.currentAuthenticatedUser().then(user => {
     const timestamp = Math.floor(date.getTime() / 1000);
     const variables = {
+      ...schemaHidden,
       ...values,
       id,
       updatedAt: timestamp,

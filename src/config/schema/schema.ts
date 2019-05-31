@@ -7,10 +7,8 @@ export const typeLookup: StringLookup = {
   organizations: 'selectMultiple',
   donors: 'selectMultiple',
   washTypes: 'selectMultiple',
-  admin0: 'selectMultiple',
   admin1: 'selectMultipleGrouped',
   admin2: 'selectMultipleGrouped',
-  status: 'selectOne',
 };
 
 export const dataTpl: Data = {
@@ -26,11 +24,11 @@ export const dataTpl: Data = {
   admin0: [],
   admin1: [],
   admin2: [],
-  status: '',
   createdAt: 0,
   createdBy: '',
   updatedAt: 0,
   updatedBy: '',
+  status: '',
 };
 
 export const labeledDataTpl: LabeledData = {
@@ -39,18 +37,22 @@ export const labeledDataTpl: LabeledData = {
   title: '',
   documentType: { label: '', value: '' },
   fileType: { label: '', value: '' },
-  clusters: [{ label: '', value: '' }],
-  organizations: [{ label: '', value: '' }],
-  donors: [{ label: '', value: '' }],
-  washTypes: [{ label: '', value: '' }],
-  admin0: [{ label: '', value: '' }],
-  admin1: [{ label: '', value: '' }],
-  admin2: [{ label: '', value: '' }],
-  status: { label: '', value: '' },
+  clusters: [],
+  organizations: [],
+  donors: [],
+  washTypes: [],
+  admin0: [],
+  admin1: [],
+  admin2: [],
   createdAt: 0,
   createdBy: '',
   updatedAt: 0,
   updatedBy: '',
+  status: '',
+};
+
+export const schemaHidden: SchemaHidden = {
+  admin0: ['SS'],
 };
 
 const schema: Schema = {
@@ -93,15 +95,6 @@ const schema: Schema = {
         ZIP: 'ZIP',
       },
     },
-    status: {
-      label: 'Status',
-      required: false,
-      options: {
-        DRAFT: 'Draft',
-        PUBLISHED: 'Published',
-        DELETED: 'Deleted',
-      },
-    },
   },
   selectMultiple: {
     clusters: {
@@ -142,11 +135,6 @@ const schema: Schema = {
         SANITATION: 'Sanitation',
         HYGIENE: 'Hygiene',
       },
-    },
-    admin0: {
-      label: 'Admin 0',
-      required: true,
-      options: { SS: 'South Sudan' },
     },
   },
   selectMultipleGrouped: {
