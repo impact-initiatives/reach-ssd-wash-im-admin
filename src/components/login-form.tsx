@@ -78,7 +78,6 @@ const LoginForm = () => {
   const loadingClass = state.loading ? ' is-loading' : '';
   const usernameErrClass = state.usernameErr ? 'help is-danger' : 'is-hidden';
   const passwordErrClass = state.passwordErr ? 'help is-danger' : 'is-hidden';
-  console.log(state.challengeName);
   return (
     <form onSubmit={e => handleSubmit(e, setState)}>
       <div className="field">

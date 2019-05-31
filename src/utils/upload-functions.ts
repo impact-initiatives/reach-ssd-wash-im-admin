@@ -2,6 +2,7 @@ import Auth from '@aws-amplify/auth';
 import Storage from '@aws-amplify/storage';
 
 import { createDocument, updateDocument } from '../config/graphql/mutations';
+import netlifyExports from '../config/netlify/netlify-exports';
 import schema, { schemaHidden } from '../config/schema/schema';
 import client from '../utils/aws-appsync-client';
 
@@ -54,7 +55,11 @@ const updateDocumentFunc = (
     };
     client
       .mutate({ mutation: updateDocument, variables })
-      .then(() => window.location.assign('/admin'))
+      .then(() =>
+        fetch(netlifyExports.buildHook, { method: 'POST' }).then(() =>
+          window.location.assign('/admin'),
+        ),
+      )
       .catch(() => setState((state: State) => ({ ...state, loading: true })));
   });
 
