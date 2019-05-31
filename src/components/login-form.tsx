@@ -29,7 +29,11 @@ const handleSubmit = (
   }
   Auth.signIn(values.email, values.password)
     .then(user => {
-      if (user.challengeName === 'NEW_PASSWORD_REQUIRED' && values.newPassword)
+      if (
+        (user.challengeName === 'NEW_PASSWORD_REQUIRED' ||
+          user.challengeName === 'FORCE_PASSWORD_CHANGE') &&
+        values.newPassword
+      )
         Auth.completeNewPassword(user, values.password, {}).then(() =>
           window.location.assign('/'),
         );
@@ -113,7 +117,8 @@ const LoginForm = () => {
         </p>
         <p className={passwordErrClass}>Password is incorrect</p>
       </div>
-      {state.challengeName === 'NEW_PASSWORD_REQUIRED' ? (
+      {state.challengeName === 'NEW_PASSWORD_REQUIRED' ||
+      state.challengeName === 'FORCE_PASSWORD_CHANGE' ? (
         <div className="field">
           <p className="control has-icons-left">
             <input
