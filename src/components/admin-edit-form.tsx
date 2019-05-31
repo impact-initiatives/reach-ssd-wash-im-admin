@@ -45,7 +45,9 @@ const AdminEditForm = ({ loading, data }: Props) => {
             {selectOne('status', schemaStatus, data.status)}
           </div>
         </div>
-      ) : null}
+      ) : (
+        <input type="hidden" name="status" value={data.status} />
+      )}
       <br />
       <div className="field is-grouped is-grouped-right">
         <div className="control">

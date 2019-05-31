@@ -6,7 +6,7 @@ import schema from '../config/schema/schema';
 import handleSubmit from '../utils/upload-functions';
 
 const UploadForm = () => {
-  const [state, setState] = useState({ loading: false });
+  const [state, setState] = useState({ loading: false, admin: false });
   const loadingClass = state.loading ? ' is-loading' : '';
   return (
     <form onSubmit={e => handleSubmit(e, setState)}>

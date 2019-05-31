@@ -208,12 +208,7 @@ type Mutation {
     admin2: [Admin2!]!
     updatedAt: AWSTimestamp!
     updatedBy: AWSEmail!
-  ): Document
-  updateDocumentStatus(
-    id: ID!
     status: Status!
-    updatedAt: AWSTimestamp!
-    updatedBy: AWSEmail!
   ): Document
 }
 

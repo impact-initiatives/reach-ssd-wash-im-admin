@@ -14,6 +14,11 @@ interface ProgressCallback {
   total: number;
 }
 
+interface State {
+  loading: boolean;
+  admin: boolean;
+}
+
 const createDocumentFunc = (values: Values, date: Date, setState: Function) =>
   Auth.currentAuthenticatedUser().then(user => {
     const timestamp = Math.floor(date.getTime() / 1000);
@@ -29,7 +34,7 @@ const createDocumentFunc = (values: Values, date: Date, setState: Function) =>
     client
       .mutate({ mutation: createDocument, variables })
       .then(() => window.location.assign('/admin'))
-      .catch(() => setState({ loading: false }));
+      .catch(() => setState((state: State) => ({ ...state, loading: true })));
   });
 
 const updateDocumentFunc = (
@@ -50,7 +55,7 @@ const updateDocumentFunc = (
     client
       .mutate({ mutation: updateDocument, variables })
       .then(() => window.location.assign('/admin'))
-      .catch(() => setState({ loading: false }));
+      .catch(() => setState((state: State) => ({ ...state, loading: true })));
   });
 
 const uploadFile = (values: Values, file: File) =>
@@ -68,7 +73,7 @@ const handleSubmit = (
   data?: Data,
 ) => {
   e.preventDefault();
-  setState({ loading: true });
+  setState((state: State) => ({ ...state, loading: true }));
   let file: File = {
     lastModified: 0,
     name: '',

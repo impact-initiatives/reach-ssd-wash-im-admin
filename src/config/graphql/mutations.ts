@@ -74,6 +74,7 @@ export const updateDocument = gql`
     $admin2: [Admin2!]!
     $updatedAt: AWSTimestamp!
     $updatedBy: AWSEmail!
+    $status: Status!
   ) {
     updateDocument(
       id: $id
@@ -88,39 +89,6 @@ export const updateDocument = gql`
       admin0: $admin0
       admin1: $admin1
       admin2: $admin2
-      updatedAt: $updatedAt
-      updatedBy: $updatedBy
-    ) {
-      id
-      file
-      title
-      documentType
-      fileType
-      clusters
-      organizations
-      donors
-      washTypes
-      admin0
-      admin1
-      admin2
-      createdAt
-      createdBy
-      updatedAt
-      updatedBy
-      status
-    }
-  }
-`;
-
-export const updateDocumentStatus = gql`
-  mutation updateDocumentStatus(
-    $id: ID!
-    $updatedAt: AWSTimestamp!
-    $updatedBy: AWSEmail!
-    $status: Status!
-  ) {
-    updateDocumentStatus(
-      id: $id
       updatedAt: $updatedAt
       updatedBy: $updatedBy
       status: $status
