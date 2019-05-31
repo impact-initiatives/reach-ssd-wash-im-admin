@@ -15,8 +15,8 @@ const onChangeTab = (setState: Function, draft: boolean, published: boolean) =>
 const AdminForm = ({ loading, data }: Props) => {
   const [state, setState] = useState({ published: false, draft: true });
   const dataFiltered = state.draft
-    ? data.filter(d => d.status.value === 'DRAFT')
-    : data.filter(d => d.status.value === 'PUBLISHED');
+    ? data.filter(d => d.status === 'DRAFT')
+    : data.filter(d => d.status === 'PUBLISHED');
   return (
     <div>
       <div className="tabs is-centered is-toggle is-toggle-rounded">
