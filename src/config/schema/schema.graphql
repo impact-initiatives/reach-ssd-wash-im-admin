@@ -160,7 +160,7 @@ enum Organizations {
 enum Status {
   DRAFT
   PUBLISHED
-  DELETED
+  DELETE
 }
 
 enum WashTypes {

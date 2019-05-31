@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Auth from '@aws-amplify/auth';
 import { navigate } from 'gatsby';
 
-import getFormType from '../utils/get-form-type';
-import schema from '../config/schema/schema';
+import getFormType, { selectOne } from '../utils/get-form-type';
+import schema, { schemaStatus } from '../config/schema/schema';
 import handleSubmit from '../utils/upload-functions';
 
 interface Props {
@@ -10,8 +11,24 @@ interface Props {
   data: Data;
 }
 
+interface State {
+  loading: boolean;
+  admin: boolean;
+}
+
+const componentDidMount = (setState: Function) => {
+  Auth.currentSession()
+    .then(session => {
+      const groups = session.getIdToken().payload['cognito:groups'];
+      const admin = Boolean(groups && groups.includes('Admin'));
+      setState((state: State) => ({ ...state, admin }));
+    })
+    .catch(() => {});
+};
+
 const AdminEditForm = ({ loading, data }: Props) => {
-  const [state, setState] = useState({ loading: false });
+  const [state, setState] = useState({ loading: false, admin: false });
+  useEffect(() => componentDidMount(setState), []);
   const loadingClass = state.loading ? ' is-loading' : '';
   return (
     <form onSubmit={e => handleSubmit(e, setState, data)}>
@@ -20,6 +37,15 @@ const AdminEditForm = ({ loading, data }: Props) => {
           getFormType(groupKey, key, data),
         ),
       )}
+      {state.admin ? (
+        <div>
+          <hr />
+          <div className="box has-background-warning">
+            <h5 className="title is-5">Admin Controls</h5>
+            {selectOne('status', schemaStatus, data.status)}
+          </div>
+        </div>
+      ) : null}
       <br />
       <div className="field is-grouped is-grouped-right">
         <div className="control">

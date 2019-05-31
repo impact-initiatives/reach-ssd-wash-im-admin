@@ -20,7 +20,8 @@ const upload = (key: string, value: Input, defaultValue: string) => {
   return (
     <div className="field" key={key}>
       <label className="label" htmlFor={key}>
-        {value.label}
+        <span>{value.label}</span>
+        <span className="has-text-danger">{value.required ? ' *' : ''}</span>
       </label>
       <div className="control">
         <div className="file has-name is-fullwidth">
@@ -58,7 +59,8 @@ const upload = (key: string, value: Input, defaultValue: string) => {
 const input = (key: string, value: Input, defaultValue: string) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
-      {value.label}
+      <span>{value.label}</span>
+      <span className="has-text-danger">{value.required ? ' *' : ''}</span>
     </label>
     <div className="control">
       <input
@@ -75,10 +77,11 @@ const input = (key: string, value: Input, defaultValue: string) => (
   </div>
 );
 
-const selectOne = (key: string, value: Select, defaultValue: string) => (
+export const selectOne = (key: string, value: Select, defaultValue: string) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
-      {value.label}
+      <span>{value.label}</span>
+      <span className="has-text-danger">{value.required ? ' *' : ''}</span>
     </label>
     <div className="control">
       <div className="select is-fullwidth">
@@ -106,7 +109,8 @@ const selectOne = (key: string, value: Select, defaultValue: string) => (
 const selectMultiple = (key: string, value: Select, defaultValue: string[]) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
-      {value.label}
+      <span>{value.label}</span>
+      <span className="has-text-danger">{value.required ? ' *' : ''}</span>
     </label>
     <div className="control">
       <SelectMultiple name={key} value={value} defaultValue={defaultValue} />
@@ -121,7 +125,8 @@ const selectMultipleGrouped = (
 ) => (
   <div className="field" key={key}>
     <label className="label" htmlFor={key}>
-      {value.label}
+      <span>{value.label}</span>
+      <span className="has-text-danger">{value.required ? ' *' : ''}</span>
     </label>
     <div className="control">
       <SelectMultiple name={key} value={value} defaultValue={defaultValue} />

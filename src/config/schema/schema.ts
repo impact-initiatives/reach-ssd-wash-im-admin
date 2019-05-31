@@ -55,6 +55,16 @@ export const schemaHidden: SchemaHidden = {
   admin0: ['SS'],
 };
 
+export const schemaStatus: Select = {
+  label: 'Status',
+  required: true,
+  options: {
+    DRAFT: 'Draft',
+    PUBLISHED: 'Published',
+    DELETE: 'Delete',
+  },
+};
+
 const schema: Schema = {
   upload: {
     file: {

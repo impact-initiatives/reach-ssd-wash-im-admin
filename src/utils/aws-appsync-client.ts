@@ -20,14 +20,6 @@ const client = new AWSAppSyncClient({
   },
 });
 
-Auth.currentSession()
-  .then(session => {
-    const groups = session.getIdToken().payload['cognito:groups'];
-    const isAdmin = Boolean(groups && groups.includes('Admin'));
-    console.log(isAdmin);
-  })
-  .catch(() => {});
-
 const clientSync = () =>
   client.sync(
     buildSync('Document', {
