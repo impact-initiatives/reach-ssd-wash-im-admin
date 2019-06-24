@@ -15,6 +15,7 @@ yarn add \
   gatsby-plugin-sass \
   gatsby-plugin-sharp \
   gatsby-plugin-typescript \
+  gatsby-source-filesystem \
   gatsby-transformer-remark \
   gatsby-transformer-sharp \
   graphql \
@@ -33,7 +34,7 @@ yarn add --dev \
   @typescript-eslint/eslint-plugin \
   @typescript-eslint/parser \
   babel-eslint \
-  eslint \
+  eslint@^5.x \
   eslint-config-react-app \
   eslint-plugin-flowtype@^2.x \
   eslint-plugin-import \

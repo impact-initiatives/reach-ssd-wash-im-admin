@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import Auth from '@aws-amplify/auth';
 
 import client from '../utils/aws-appsync-client';
-import awsConfig from '../config/aws/aws-exports';
+import awsExports from '../config/aws/aws-exports';
 import Logo from '../images/wash-icon.svg';
 
 interface Props {
@@ -16,9 +16,7 @@ interface State {
 
 const onLogout = () =>
   Auth.signOut().then(() =>
-    client
-      .clearStore()
-      .then(() => window.location.assign(awsConfig.route53.public)),
+    client.clearStore().then(() => window.location.assign('/login')),
   );
 
 const onClick = (state: State, setState: Function) =>
@@ -75,6 +73,13 @@ const PageHeader = ({ tab }: Props) => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
+              <a
+                className="button is-link is-rounded"
+                href={awsExports.route53.public}
+                aria-label="Public Site"
+              >
+                Public Site
+              </a>
               <button
                 className="button is-primary is-rounded"
                 onClick={onLogout}
