@@ -31,7 +31,7 @@ export const onServiceWorkerActive = () => removeProgressBar();
 
 export const onServiceWorkerUpdateFound = () => addProgressBar();
 
-export const onServiceWorkerUpdateReady = () => window.location.reload();
+export const onServiceWorkerUpdateReady = () => removeProgressBar();
 
 export const onPreRouteUpdate = ({ location }) => {
   Auth.currentAuthenticatedUser()
