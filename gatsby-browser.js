@@ -1,11 +1,11 @@
 import React from 'react';
-import Auth from '@aws-amplify/auth';
-import { navigate } from 'gatsby';
 import { ApolloProvider } from 'react-apollo';
 import { Rehydrated } from 'aws-appsync-react';
-import './src/styles/styles.sass';
 
 import client from './src/utils/aws-appsync-client';
+import IsLoggedIn from './src/utils/is-logged-in';
+
+import './src/styles/styles.sass';
 
 const ELEMENT_ID = 'gatsby-browser-service-worker-notification';
 
@@ -33,18 +33,10 @@ export const onServiceWorkerUpdateFound = () => addProgressBar();
 
 export const onServiceWorkerUpdateReady = () => removeProgressBar();
 
-export const onPreRouteUpdate = ({ location }) => {
-  Auth.currentAuthenticatedUser()
-    .then(() => {
-      if (location.pathname.startsWith('/login')) navigate('/');
-    })
-    .catch(() => {
-      if (!location.pathname.startsWith('/login')) navigate('/login');
-    });
-};
-
 export const wrapRootElement = ({ element }) => (
   <ApolloProvider client={client}>
-    <Rehydrated>{element}</Rehydrated>
+    <Rehydrated>
+      <IsLoggedIn element={element} />
+    </Rehydrated>
   </ApolloProvider>
 );

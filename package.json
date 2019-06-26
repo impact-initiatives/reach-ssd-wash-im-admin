@@ -10,7 +10,7 @@
     "git": "yarn build && git push && git checkout master && git merge develop && git push && git checkout develop",
     "start": "gatsby develop",
     "network": "gatsby develop -H 0.0.0.0",
-    "serve": "gatsby serve",
+    "serve": "yarn build && gatsby serve",
     "format": "prettier --write 'src/**/*.{js,ts,jsx,tsx}'",
     "lint": "tsc && eslint --fix 'src/**/*.{js,ts,jsx,tsx}'",
     "upgrade-all": "./upgrade-all.sh && yarn upgrade"

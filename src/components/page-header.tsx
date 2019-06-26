@@ -16,7 +16,7 @@ interface State {
 
 const onLogout = () =>
   Auth.signOut().then(() =>
-    client.clearStore().then(() => window.location.assign('/login')),
+    client.clearStore().then(() => window.location.reload()),
   );
 
 const onClick = (state: State, setState: Function) =>
@@ -78,7 +78,7 @@ const PageHeader = ({ tab }: Props) => {
                 href={awsExports.route53.public}
                 aria-label="Public Site"
               >
-                Public Site
+                Public
               </a>
               <button
                 className="button is-primary is-rounded"
