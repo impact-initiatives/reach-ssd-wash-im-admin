@@ -1,4 +1,5 @@
 import React from 'react';
+import { navigate } from 'gatsby';
 import { ApolloProvider } from 'react-apollo';
 import { Rehydrated } from 'aws-appsync-react';
 
@@ -31,7 +32,8 @@ export const onServiceWorkerActive = () => removeProgressBar();
 
 export const onServiceWorkerUpdateFound = () => addProgressBar();
 
-export const onServiceWorkerUpdateReady = () => removeProgressBar();
+export const onServiceWorkerUpdateReady = () =>
+  navigate(window.location.pathname);
 
 export const wrapRootElement = ({ element }) => (
   <ApolloProvider client={client}>
