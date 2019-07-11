@@ -22,7 +22,7 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   const { value } = e.currentTarget.elements.markdown;
   if (value) {
     Storage.put('home-page.md', value, {
-      customPrefix: { public: 'home/' },
+      customPrefix: { public: 'markdown/' },
       contentType: 'text/markdown',
     }).then(() =>
       fetch(exports.netlify.buildHook, { method: 'POST' }).then(() =>
@@ -37,7 +37,7 @@ const componentDidMount = (
   setState: Function,
 ) => {
   Storage.get('home-page.md', {
-    customPrefix: { public: 'home/' },
+    customPrefix: { public: 'markdown/' },
     download: true,
   }).then(response => {
     const body = response.Body.toString();

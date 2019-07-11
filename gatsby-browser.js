@@ -21,7 +21,7 @@ const addProgressBar = () => {
 const removeProgressBar = () => document.getElementById(ELEMENT_ID).remove();
 
 if (
-  window.location.protocol === 'https:' &&
+  process.env.NODE_ENV === 'production' &&
   !navigator.serviceWorker.controller
 ) {
   addProgressBar();
