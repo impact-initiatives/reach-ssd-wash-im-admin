@@ -35,7 +35,7 @@ const handleSubmit = (
         values.newPassword
       )
         Auth.completeNewPassword(user, values.password, {}).then(() =>
-          window.location.assign('/'),
+          window.location.reload(),
         );
       else if (user.challengeName)
         setLoading((state: State) => ({
@@ -43,7 +43,7 @@ const handleSubmit = (
           loading: false,
           challengeName: user.challengeName,
         }));
-      else window.location.assign('/');
+      else window.location.reload();
     })
     .catch(({ code }) => {
       if (code === 'UserNotFoundException')

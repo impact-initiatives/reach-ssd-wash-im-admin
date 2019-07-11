@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Auth from '@aws-amplify/auth';
 import { navigate } from 'gatsby';
+import Auth from '@aws-amplify/auth';
 
 import getFormType, { selectOne } from '../utils/get-form-type';
 import schema, { schemaStatus } from '../config/graphql-schema';

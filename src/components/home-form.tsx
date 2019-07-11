@@ -24,11 +24,7 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     Storage.put('home-page.md', value, {
       customPrefix: { public: 'markdown/' },
       contentType: 'text/markdown',
-    }).then(() =>
-      fetch(exports.netlify.buildHook, { method: 'POST' }).then(() =>
-        window.location.reload(),
-      ),
-    );
+    }).then(() => fetch(exports.netlify.buildHook, { method: 'POST' }));
   }
 };
 
