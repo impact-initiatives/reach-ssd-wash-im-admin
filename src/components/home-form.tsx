@@ -14,7 +14,7 @@ interface State {
 const onChange = (e: React.FormEvent, setState: Function) => {
   e.persist();
   const input = DOMPurify.sanitize(marked(e.target.value));
-  setState(() => ({ input }));
+  setState((state: State) => ({ ...state, input }));
 };
 
 const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
