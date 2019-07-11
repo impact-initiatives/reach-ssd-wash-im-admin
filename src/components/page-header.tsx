@@ -4,7 +4,7 @@ import Auth from '@aws-amplify/auth';
 
 import client from '../utils/aws-appsync-client';
 import awsExports from '../config/aws/aws-exports';
-import Logo from '../images/wash-icon.svg';
+import logo from '../images/wash-icon.svg';
 
 interface Props {
   tab: string;
@@ -29,7 +29,7 @@ const PageHeader = ({ tab }: Props) => {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/" aria-label="Home page">
-          <Logo style={{ height: 28 }} />
+          <img src={logo} style={{ height: 28 }} />
         </Link>
         <button
           className={`button is-white navbar-burger burger${isActive}`}

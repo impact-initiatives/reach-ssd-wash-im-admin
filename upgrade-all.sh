@@ -12,7 +12,6 @@ yarn add \
   gatsby-plugin-netlify \
   gatsby-plugin-offline \
   gatsby-plugin-react-helmet \
-  gatsby-plugin-react-svg \
   gatsby-plugin-sass \
   gatsby-plugin-sharp \
   gatsby-plugin-typescript \

@@ -18,27 +18,30 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-plugin-offline',
+      options: {
+        globPatterns: [
+          '**/*.{js,css,html}',
+          '**/*/page-data.json',
+          'manifest.json',
+          'manifest.webmanifest',
+        ],
+        globIgnores: ['idb-keyval-iife.min.js'],
+        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
         path: `${__dirname}/src/images`,
       },
     },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'markdown',
-        path: `${__dirname}/src/markdown`,
-      },
-    },
     'gatsby-plugin-netlify',
-    'gatsby-plugin-offline',
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-react-svg',
     'gatsby-plugin-sass',
     'gatsby-plugin-sharp',
     'gatsby-plugin-typescript',
-    'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
   ],
 };
