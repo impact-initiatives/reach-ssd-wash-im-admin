@@ -3,8 +3,8 @@ import { Link } from 'gatsby';
 import Auth from '@aws-amplify/auth';
 
 import client from '../utils/aws-appsync-client';
-import awsExports from '../config/aws/aws-exports';
-import logo from '../images/wash-icon.svg';
+import exports from '../config/exports';
+import logo from '../config/icon.svg';
 
 interface Props {
   tab: string;
@@ -75,7 +75,7 @@ const PageHeader = ({ tab }: Props) => {
             <div className="buttons">
               <a
                 className="button is-link is-rounded"
-                href={awsExports.route53.public}
+                href={exports.route53.public}
                 aria-label="Public Site"
               >
                 Public

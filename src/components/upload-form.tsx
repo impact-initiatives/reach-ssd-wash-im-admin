@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { navigate } from 'gatsby';
 
 import getFormType from '../utils/get-form-type';
-import schema from '../config/schema/schema';
+import schema from '../config/graphql-schema';
 import handleSubmit from '../utils/upload-functions';
 
 const UploadForm = () => {

@@ -4,7 +4,7 @@ import Auth from '@aws-amplify/auth';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 
-import netlifyExports from '../config/netlify/netlify-exports';
+import exports from '../config/exports';
 
 interface State {
   input: string;
@@ -25,7 +25,7 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       customPrefix: { public: 'home/' },
       contentType: 'text/markdown',
     }).then(() =>
-      fetch(netlifyExports.buildHook, { method: 'POST' }).then(() =>
+      fetch(exports.netlify.buildHook, { method: 'POST' }).then(() =>
         window.location.reload(),
       ),
     );

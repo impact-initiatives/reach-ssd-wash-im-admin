@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
-import schema, { dataTpl } from '../config/schema/schema';
-import awsExports from '../config/aws/aws-exports';
+import schema, { dataTpl } from '../config/graphql-schema';
+import exports from '../config/exports';
 import SelectMultiple from '../components/select-multiple';
 
 const onChange = (
@@ -42,7 +42,7 @@ const upload = (key: string, value: Input, defaultValue: string) => {
             </span>
             <span className="file-name" ref={uploadDiv}>
               {defaultValue ? (
-                <a href={awsExports.route53.files + defaultValue}>
+                <a href={exports.route53.files + defaultValue}>
                   {defaultValue.substring(8)}
                 </a>
               ) : (

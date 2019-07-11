@@ -5,7 +5,7 @@ import SEO from '../../components/seo';
 import AdminForm from '../../components/admin-form';
 import PageHeader from '../../components/page-header';
 import PageFooter from '../../components/page-footer';
-import { listDocuments } from '../../config/graphql/queries';
+import { listDocuments } from '../../config/graphql-queries';
 import applyLabels from '../../utils/apply-labels';
 
 interface Props {

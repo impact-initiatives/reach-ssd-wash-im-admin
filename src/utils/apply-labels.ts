@@ -1,4 +1,4 @@
-import schema, { typeLookup, labeledDataTpl } from '../config/schema/schema';
+import schema, { typeLookup, labeledDataTpl } from '../config/graphql-schema';
 
 const schemaLabelsTpl: StringLookup = {};
 
@@ -21,7 +21,7 @@ const applyLabels = (documents: Data[]): LabeledData[] =>
 
 const mapEntries = ([key, value]: [string, DataProp]): [
   string,
-  LabeledDataProp
+  LabeledDataProp,
 ] => {
   if (typeLookup[key] === 'selectOne' && typeof value === 'string')
     return [key, { label: schema.selectOne[key].options[value], value }];

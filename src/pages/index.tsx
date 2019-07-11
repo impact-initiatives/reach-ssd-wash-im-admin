@@ -4,6 +4,7 @@ import SEO from '../components/seo';
 import HomeForm from '../components/home-form';
 import PageHeader from '../components/page-header';
 import PageFooter from '../components/page-footer';
+import exports from '../config/exports';
 
 const IndexPage = () => (
   <div>
@@ -11,9 +12,7 @@ const IndexPage = () => (
     <PageHeader tab="/" />
     <section className="section">
       <div className="container is-fluid">
-        <h1 className="title has-text-centered">
-          South Sudan WASH Information Management System
-        </h1>
+        <h1 className="title has-text-centered">{exports.site.title}</h1>
         <HomeForm />
       </div>
     </section>

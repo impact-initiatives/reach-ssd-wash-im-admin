@@ -28,6 +28,7 @@ yarn add \
 
 yarn add --dev \
   @babel/core \
+  dotenv \
   eslint \
   node-sass \
   prettier \

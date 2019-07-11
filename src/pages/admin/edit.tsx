@@ -5,8 +5,8 @@ import SEO from '../../components/seo';
 import AdminEditForm from '../../components/admin-edit-form';
 import PageHeader from '../../components/page-header';
 import PageFooter from '../../components/page-footer';
-import { listDocuments } from '../../config/graphql/queries';
-import { dataTpl } from '../../config/schema/schema';
+import { listDocuments } from '../../config/graphql-queries';
+import { dataTpl } from '../../config/graphql-schema';
 
 interface Props {
   loading: boolean;

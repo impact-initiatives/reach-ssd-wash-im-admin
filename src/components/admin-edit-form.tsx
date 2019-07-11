@@ -3,7 +3,7 @@ import Auth from '@aws-amplify/auth';
 import { navigate } from 'gatsby';
 
 import getFormType, { selectOne } from '../utils/get-form-type';
-import schema, { schemaStatus } from '../config/schema/schema';
+import schema, { schemaStatus } from '../config/graphql-schema';
 import handleSubmit from '../utils/upload-functions';
 
 interface Props {

@@ -1,20 +1,22 @@
+const site = require('./src/config/site');
+
 module.exports = {
   siteMetadata: {
-    title: 'South Sudan WASH Platform (Admin)',
-    description: 'A repository of documents by the WASH cluster in South Sudan',
+    title: site.name,
+    description: site.description,
     author: '@maxmalynowsky',
   },
   plugins: [
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'South Sudan WASH Platform',
-        short_name: 'SSD WASH IM',
+        name: site.name,
+        short_name: site.nameShort,
         start_url: '/',
-        background_color: '#009999',
-        theme_color: '#009999',
+        background_color: '#FFFFFF',
+        theme_color: site.themeColor,
         display: 'minimal-ui',
-        icon: 'src/images/wash-icon.svg',
+        icon: 'src/config/icon.svg',
       },
     },
     {
@@ -28,13 +30,6 @@ module.exports = {
         ],
         globIgnores: ['idb-keyval-iife.min.js'],
         maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: `${__dirname}/src/images`,
       },
     },
     'gatsby-plugin-netlify',

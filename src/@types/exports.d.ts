@@ -1,4 +1,4 @@
-interface AwsExports {
+interface Exports {
   Auth: {
     identityPoolId: string;
     region: string;
@@ -17,5 +17,11 @@ interface AwsExports {
     admin: string;
     files: string;
     public: string;
+  };
+  netlify: {
+    buildHook: string;
+  };
+  site: {
+    title: string;
   };
 }
