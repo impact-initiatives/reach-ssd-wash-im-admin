@@ -5,6 +5,7 @@ yarn add \
   aws-appsync \
   aws-appsync-react \
   bulma \
+  dompurify \
   gatsby \
   gatsby-image \
   gatsby-plugin-manifest \
@@ -16,10 +17,10 @@ yarn add \
   gatsby-plugin-sharp \
   gatsby-plugin-typescript \
   gatsby-source-filesystem \
-  gatsby-transformer-remark \
   gatsby-transformer-sharp \
   graphql \
   graphql-tag \
+  marked \
   react \
   react-apollo \
   react-dom \
@@ -28,20 +29,7 @@ yarn add \
 
 yarn add --dev \
   @babel/core \
-  @types/graphql \
-  @types/node-fetch \
-  @types/react-helmet \
-  @typescript-eslint/eslint-plugin \
-  @typescript-eslint/parser \
-  babel-eslint \
-  eslint@^5.x \
-  eslint-config-react-app \
-  eslint-plugin-flowtype@^2.x \
-  eslint-plugin-import \
-  eslint-plugin-jsx-a11y \
-  eslint-plugin-react \
-  eslint-plugin-react-hooks \
-  node-fetch \
+  eslint \
   node-sass \
   prettier \
   typescript \

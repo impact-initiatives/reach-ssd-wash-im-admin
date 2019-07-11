@@ -64,7 +64,7 @@ const updateDocumentFunc = (
   });
 
 const uploadFile = (values: Values, file: File) =>
-  Storage.put(`${values.file}`, file, {
+  Storage.put(values.file, file, {
     contentType: file.type,
     customPrefix: { public: 'files/' },
     progressCallback({ loaded, total }: ProgressCallback) {

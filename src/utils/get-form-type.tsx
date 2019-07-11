@@ -42,7 +42,7 @@ const upload = (key: string, value: Input, defaultValue: string) => {
             </span>
             <span className="file-name" ref={uploadDiv}>
               {defaultValue ? (
-                <a href={awsExports.AWSS3.url + defaultValue}>
+                <a href={awsExports.route53.files + defaultValue}>
                   {defaultValue.substring(8)}
                 </a>
               ) : (
