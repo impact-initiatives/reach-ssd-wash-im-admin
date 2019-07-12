@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'gatsby';
 
+import { tableHeader, tableBody } from '../config/table-admin';
 import TablePagination from './table-pagination';
 
 interface Props {
@@ -21,40 +21,12 @@ const Table = ({ data }: Props) => {
         <table className="table is-fullwidth is-hoverable is-striped">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Document Type</th>
-              <th>File Type</th>
-              <th>Created</th>
-              <th>Updated</th>
+              {tableHeader.map((header, i) => (
+                <th key={i}>{header}</th>
+              ))}
             </tr>
           </thead>
-          <tbody>
-            {pageData.map(d => (
-              <tr key={d.id}>
-                <td>
-                  <Link to={`/admin/edit/#${d.id}`} aria-label={d.title}>
-                    {d.title}
-                  </Link>
-                </td>
-                <td>{d.documentType.label}</td>
-                <td>{d.fileType.label}</td>
-                <td>
-                  {new Date(d.createdAt * 1000).toLocaleString('en-GB', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit',
-                  })}
-                </td>
-                <td>
-                  {new Date(d.updatedAt * 1000).toLocaleString('en-GB', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit',
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <tbody>{tableBody(pageData)}</tbody>
         </table>
       </div>
       <TablePagination

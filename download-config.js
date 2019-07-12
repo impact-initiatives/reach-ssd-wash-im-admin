@@ -22,4 +22,5 @@ downloadFile('graphql-queries.ts');
 downloadFile('graphql-schema.ts');
 downloadFile('icon.svg');
 downloadFile('site.js');
+downloadFile('table-admin.tsx');
 downloadFile('theme.sass');
