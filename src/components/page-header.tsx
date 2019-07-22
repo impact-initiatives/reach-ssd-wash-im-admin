@@ -91,13 +91,15 @@ const PageHeader = ({ tab }: Props) => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a
-                className="button is-link is-rounded"
-                href={exports.route53.public}
-                aria-label="Public Site"
-              >
-                Public
-              </a>
+              {exports.route53.public ? (
+                <a
+                  className="button is-link is-rounded"
+                  href={exports.route53.public}
+                  aria-label="Public Site"
+                >
+                  Public
+                </a>
+              ) : null}
               <button
                 className="button is-primary is-rounded"
                 onClick={onLogout}

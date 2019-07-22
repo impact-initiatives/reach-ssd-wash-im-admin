@@ -118,10 +118,14 @@ const handleSubmit = (
           }
         }
       }
-      const mergedValues = new Set([...values[name], ...options]);
-      values[name] = Array.from(mergedValues)
-        .filter(Boolean)
-        .sort();
+      if (values[name]) {
+        const mergedValues = new Set([...values[name], ...options]);
+        values[name] = Array.from(mergedValues)
+          .filter(Boolean)
+          .sort();
+      } else {
+        values[name] = options.filter(Boolean).sort();
+      }
     }
   }
   if (file && data) {
