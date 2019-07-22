@@ -1,27 +1,32 @@
 require('dotenv').config();
-
-const https = require('https');
+const AWS = require('aws-sdk');
 const fs = require('fs');
-
-const bucket = process.env.AWS_BUCKET;
+const path = require('path');
+const Bucket = process.env.AWS_BUCKET;
 const region = 'eu-west-1';
+const Prefix = 'config/';
+const Delimiter = '/';
 
-const srcPath = `https://s3-${region}.amazonaws.com/${bucket}/config/`;
-const destPath = 'src/config/';
+const s3 = new AWS.S3({ params: { Bucket }, region });
 
-const downloadFile = name => {
-  const file = fs.createWriteStream(destPath + name);
-  https.get(srcPath + name, response => response.pipe(file));
+const makeParent = filePath => {
+  const dirname = path.dirname(filePath);
+  if (fs.existsSync(dirname)) return true;
+  makeParent(dirname);
+  fs.mkdirSync(dirname);
 };
 
-if (!fs.existsSync(destPath)) fs.mkdirSync(destPath);
-downloadFile('data.d.ts');
-downloadFile('exports.ts');
-downloadFile('graphql-mutations.ts');
-downloadFile('graphql-queries.ts');
-downloadFile('graphql-schema.ts');
-downloadFile('icon.svg');
-downloadFile('site.js');
-downloadFile('table-public.tsx');
-downloadFile('table-admin.tsx');
-downloadFile('theme.sass');
+const download = Key => {
+  if (Key.endsWith('/')) return;
+  const dest = path.resolve(__dirname, 'src', 'config', Key);
+  makeParent(dest);
+  const file = fs.createWriteStream(dest);
+  s3.getObject({ Bucket, Key })
+    .createReadStream()
+    .pipe(file);
+};
+
+s3.listObjectsV2({ Bucket, Delimiter, Prefix }).eachPage((err, data) => {
+  if (err) console.error(err);
+  if (data) data.Contents.forEach(({ Key }) => download(Key));
+});

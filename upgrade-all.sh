@@ -28,6 +28,7 @@ yarn add \
 
 yarn add --dev \
   @babel/core \
+  aws-sdk \
   dotenv \
   eslint \
   node-sass \
