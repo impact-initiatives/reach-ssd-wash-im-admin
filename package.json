@@ -6,7 +6,7 @@
   "author": "Maxym Malynowsky <maxym.malynowsky@reach-initiative.org>",
   "scripts": {
     "build": "rm -rf .cache && rm -rf public && gatsby build",
-    "build-deploy": "node download-config.js && gatsby build",
+    "build-deploy": "node download-config.js && node download-maps.js && gatsby build",
     "deploy": "yarn build && netlify deploy",
     "git": "yarn build && git push && git checkout master && git merge develop && git push && git checkout develop",
     "start": "gatsby develop",
@@ -46,7 +46,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "aws-sdk": "^2.496.0",
     "dotenv": "^8.0.0",
     "eslint": "^6.1.0",
     "node-sass": "^4.12.0",
