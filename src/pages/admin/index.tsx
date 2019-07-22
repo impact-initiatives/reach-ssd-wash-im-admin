@@ -1,10 +1,10 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 
-import SEO from '../../components/seo';
-import AdminForm from '../../components/admin-form';
 import PageHeader from '../../components/page-header';
 import PageFooter from '../../components/page-footer';
+import AdminForm from '../../components/admin-form';
+import SEO from '../../components/seo';
 import { listDocuments } from '../../config/graphql-queries';
 import applyLabels from '../../utils/apply-labels';
 

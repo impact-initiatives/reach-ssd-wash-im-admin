@@ -8,6 +8,13 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${__dirname}/src/config`,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: site.nameAdmin,

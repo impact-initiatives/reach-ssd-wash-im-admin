@@ -11,20 +11,27 @@ interface State {
   admin: boolean;
 }
 
+const onClick = (setState: Function, edit: boolean) => {
+  setState((state: State) => ({ ...state, edit }));
+};
+
 const onChange = (e: React.FormEvent, setState: Function) => {
   e.persist();
   const input = DOMPurify.sanitize(marked(e.target.value));
   setState((state: State) => ({ ...state, input }));
 };
 
-const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const onSubmit = (e: React.FormEvent<HTMLFormElement>, setState: Function) => {
   e.preventDefault();
   const { value } = e.currentTarget.elements.markdown;
   if (value) {
     Storage.put('home-page.md', value, {
       customPrefix: { public: 'markdown/' },
       contentType: 'text/markdown',
-    }).then(() => fetch(exports.netlify.buildHook, { method: 'POST' }));
+    }).then(() => {
+      fetch(exports.netlify.buildHook, { method: 'POST' });
+      setState((state: State) => ({ ...state, edit: false }));
+    });
   }
 };
 
@@ -51,14 +58,31 @@ const componentDidMount = (
 };
 
 const IndexPage = () => {
-  const [state, setState] = useState({ input: '', admin: false });
+  const [state, setState] = useState({ input: '', edit: false, admin: false });
   const textareaElement = useRef<HTMLTextAreaElement>(null);
   useEffect(() => componentDidMount(textareaElement.current, setState), []);
-  const isHidden = state.admin ? '' : ' is-hidden';
+  const isHidden = state.admin && state.edit ? '' : ' is-hidden';
+  const isHiddenEdit = state.admin && !state.edit ? '' : ' is-hidden';
   return (
-    <form onSubmit={onSubmit}>
-      <div className={`field${isHidden}`}>
-        <button className="button">Save Content</button>
+    <form onSubmit={e => onSubmit(e, setState)}>
+      <div className={`field buttons${isHidden}`}>
+        <button
+          className="button is-rounded is-link"
+          type="button"
+          onClick={() => onClick(setState, false)}
+        >
+          Cancel Edits
+        </button>
+        <button className="button is-rounded is-primary">Save Content</button>
+      </div>
+      <div className={`field${isHiddenEdit}`}>
+        <button
+          className="button is-rounded is-link"
+          type="button"
+          onClick={() => onClick(setState, true)}
+        >
+          Edit Content
+        </button>
       </div>
       <div className="columns is-desktop">
         <div className={`column${isHidden}`}>

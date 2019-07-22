@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { FaEdit, FaClipboardCheck } from 'react-icons/fa';
+import { tableHeader, tableBody } from '../config/table-admin';
 
 import Table from './table';
 
@@ -45,7 +46,11 @@ const AdminForm = ({ loading, data }: Props) => {
           </li>
         </ul>
       </div>
-      <Table data={dataFiltered} />
+      <Table
+        data={dataFiltered}
+        tableHeader={tableHeader}
+        tableBody={tableBody}
+      />
     </div>
   );
 };

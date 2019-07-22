@@ -53,6 +53,24 @@ const PageHeader = ({ tab }: Props) => {
           </Link>
           <Link
             className={`navbar-item is-tab${
+              tab === '/files' ? ' is-active' : ''
+            }`}
+            to="/files"
+            aria-label="Files and documents"
+          >
+            Files
+          </Link>
+          <Link
+            className={`navbar-item is-tab${
+              tab === '/maps' ? ' is-active' : ''
+            }`}
+            to="/maps"
+            aria-label="Interactive maps"
+          >
+            Maps
+          </Link>
+          <Link
+            className={`navbar-item is-tab${
               tab === '/upload' ? ' is-active' : ''
             }`}
             to="/upload"

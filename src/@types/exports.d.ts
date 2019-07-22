@@ -1,3 +1,10 @@
+type MapList {
+  title: string;
+  description: string;
+  img: string;
+  url: string;
+}
+
 interface Exports {
   Auth: {
     identityPoolId: string;
@@ -24,4 +31,5 @@ interface Exports {
   site: {
     title: string;
   };
+  maps: MapList[];
 }
