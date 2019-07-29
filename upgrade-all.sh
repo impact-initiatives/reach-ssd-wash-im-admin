@@ -8,6 +8,7 @@ yarn add \
   dompurify \
   gatsby \
   gatsby-image \
+  gatsby-plugin-google-analytics \
   gatsby-plugin-manifest \
   gatsby-plugin-netlify \
   gatsby-plugin-offline \

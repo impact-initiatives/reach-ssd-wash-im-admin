@@ -8,6 +8,12 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-plugin-google-analytics',
+      options: {
+        trackingId: site.googleAnalyticsId,
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
@@ -37,6 +43,7 @@ module.exports = {
         ],
         globIgnores: ['idb-keyval-iife.min.js'],
         maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
+        offlineGoogleAnalytics: true,
       },
     },
     'gatsby-plugin-netlify',
