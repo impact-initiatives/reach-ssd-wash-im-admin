@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
-import schema, { dataTpl } from '../config/graphql-schema';
+import schema, { dataTpl } from '../config/schema';
 import exports from '../config/exports';
 import SelectMultiple from '../components/select-multiple';
 
@@ -42,7 +42,7 @@ const upload = (key: string, value: Input, defaultValue: string) => {
             </span>
             <span className="file-name" ref={uploadDiv}>
               {defaultValue ? (
-                <a href={exports.route53.files + defaultValue}>
+                <a href={exports.apollo.files + defaultValue}>
                   {defaultValue.substring(8)}
                 </a>
               ) : (

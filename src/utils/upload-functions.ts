@@ -1,18 +1,9 @@
-import Auth from '@aws-amplify/auth';
-import Storage from '@aws-amplify/storage';
-
-import { createDocument, updateDocument } from '../config/graphql-mutations';
-import schema, { schemaHidden } from '../config/graphql-schema';
+import schema, { schemaHidden } from '../config/schema';
 import exports from '../config/exports';
-import client from '../utils/aws-appsync-client';
+import { getToken } from './wrap-root-element';
 
 interface Values {
   [key: string]: string | string[];
-}
-
-interface ProgressCallback {
-  loaded: number;
-  total: number;
 }
 
 interface State {
@@ -20,61 +11,21 @@ interface State {
   admin: boolean;
 }
 
-const createDocumentFunc = (values: Values, date: Date, setState: Function) =>
-  Auth.currentAuthenticatedUser().then(user => {
-    const timestamp = Math.floor(date.getTime() / 1000);
-    const variables = {
-      ...schemaHidden,
-      ...values,
-      createdAt: timestamp,
-      createdBy: user.attributes.email,
-      updatedAt: timestamp,
-      updatedBy: user.attributes.email,
-      status: 'DRAFT',
-    };
-    client
-      .mutate({ mutation: createDocument, variables })
-      .then(() => window.location.assign('/admin'))
-      .catch(() => setState((state: State) => ({ ...state, loading: true })));
+const uploadFile = (file: File, subfolder: string, accessToken: string) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('subfolder', subfolder);
+  return fetch(exports.apollo.uri + '-files', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + accessToken },
+    body: formData,
   });
+};
 
-const updateDocumentFunc = (
-  values: Values,
-  date: Date,
-  setState: Function,
-  id: string,
-) =>
-  Auth.currentAuthenticatedUser().then(user => {
-    const timestamp = Math.floor(date.getTime() / 1000);
-    const variables = {
-      ...schemaHidden,
-      ...values,
-      id,
-      updatedAt: timestamp,
-      updatedBy: user.attributes.email,
-    };
-    client
-      .mutate({ mutation: updateDocument, variables })
-      .then(() =>
-        fetch(exports.netlify.buildHook, { method: 'POST' }).then(() =>
-          window.location.assign('/admin'),
-        ),
-      )
-      .catch(() => setState((state: State) => ({ ...state, loading: true })));
-  });
-
-const uploadFile = (values: Values, file: File) =>
-  Storage.put(values.file, file, {
-    contentType: file.type,
-    customPrefix: { public: 'files/' },
-    progressCallback({ loaded, total }: ProgressCallback) {
-      console.log(`${(loaded / total) * 100}%`);
-    },
-  });
-
-const handleSubmit = (
+const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>,
   setState: Function,
+  mutation: Function,
   data?: Data,
 ) => {
   e.preventDefault();
@@ -130,17 +81,47 @@ const handleSubmit = (
   }
   if (file && data) {
     values.file = `${year}/${month}/${file.name}`;
-    uploadFile(values, file).then(() =>
-      updateDocumentFunc(values, date, setState, data.id),
-    );
+    try {
+      const accessToken = await getToken;
+      await uploadFile(file, `${year}/${month}`, accessToken);
+      try {
+        await mutation({
+          variables: { ...schemaHidden, ...values, id: data.id },
+        });
+        setState((state: State) => ({ ...state, loading: false }));
+        window.location.assign('/admin');
+      } catch (e) {
+        setState((state: State) => ({ ...state, loading: false }));
+      }
+    } catch (e) {
+      setState((state: State) => ({ ...state, loading: false }));
+    }
   } else if (file) {
     values.file = `${year}/${month}/${file.name}`;
-    uploadFile(values, file).then(() =>
-      createDocumentFunc(values, date, setState),
-    );
+    try {
+      const accessToken = await getToken;
+      await uploadFile(file, `${year}/${month}`, accessToken);
+      try {
+        await mutation({ variables: { ...schemaHidden, ...values } });
+        setState((state: State) => ({ ...state, loading: false }));
+        window.location.assign('/admin');
+      } catch (e) {
+        setState((state: State) => ({ ...state, loading: false }));
+      }
+    } catch (e) {
+      setState((state: State) => ({ ...state, loading: false }));
+    }
   } else if (data) {
     values.file = data.file;
-    updateDocumentFunc(values, date, setState, data.id);
+    try {
+      await mutation({
+        variables: { ...schemaHidden, ...values, id: data.id },
+      });
+      setState((state: State) => ({ ...state, loading: false }));
+      window.location.assign('/admin');
+    } catch (e) {
+      setState((state: State) => ({ ...state, loading: false }));
+    }
   }
 };
 

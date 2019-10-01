@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
-import Auth from '@aws-amplify/auth';
 
-import client from '../utils/aws-appsync-client';
-import exports from '../config/exports';
 import logo from '../config/icon.svg';
+import { useAuth0 } from '../utils/react-auth0-wrapper';
 
 interface Props {
   tab: string;
@@ -14,22 +12,18 @@ interface State {
   menuOpen: boolean;
 }
 
-const onLogout = () =>
-  Auth.signOut().then(() =>
-    client.clearStore().then(() => window.location.reload()),
-  );
-
 const onClick = (state: State, setState: Function) =>
   setState({ menuOpen: !state.menuOpen });
 
 const PageHeader = ({ tab }: Props) => {
   const [state, setState] = useState({ menuOpen: false });
   const isActive = state.menuOpen ? ' is-active' : '';
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/" aria-label="Home page">
-          <img src={logo} style={{ height: 28 }} />
+          <img src={logo} alt="logo" style={{ height: 28 }} />
         </Link>
         <button
           className={`button is-white navbar-burger burger${isActive}`}
@@ -69,43 +63,48 @@ const PageHeader = ({ tab }: Props) => {
           >
             Maps
           </Link>
-          <Link
-            className={`navbar-item is-tab${
-              tab === '/upload' ? ' is-active' : ''
-            }`}
-            to="/upload"
-            aria-label="Upload files"
-          >
-            Upload
-          </Link>
-          <Link
-            className={`navbar-item is-tab${
-              tab === '/admin' ? ' is-active' : ''
-            }`}
-            to="/admin"
-            aria-label="Admin console"
-          >
-            Admin
-          </Link>
+          {isAuthenticated && (
+            <Link
+              className={`navbar-item is-tab${
+                tab === '/upload' ? ' is-active' : ''
+              }`}
+              to="/upload"
+              aria-label="Upload files"
+            >
+              Upload
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link
+              className={`navbar-item is-tab${
+                tab === '/admin' ? ' is-active' : ''
+              }`}
+              to="/admin"
+              aria-label="Admin console"
+            >
+              Admin
+            </Link>
+          )}
         </div>
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              {exports.route53.public ? (
-                <a
-                  className="button is-link is-rounded"
-                  href={exports.route53.public}
-                  aria-label="Public Site"
+              {!isAuthenticated && (
+                <button
+                  className="button is-primary is-rounded"
+                  onClick={() => loginWithRedirect({})}
                 >
-                  Public
-                </a>
-              ) : null}
-              <button
-                className="button is-primary is-rounded"
-                onClick={onLogout}
-              >
-                Logout
-              </button>
+                  Log in
+                </button>
+              )}
+              {isAuthenticated && (
+                <button
+                  className="button is-primary is-rounded"
+                  onClick={() => logout()}
+                >
+                  Log out
+                </button>
+              )}
             </div>
           </div>
         </div>

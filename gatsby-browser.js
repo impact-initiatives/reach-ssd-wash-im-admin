@@ -1,11 +1,6 @@
-import React from 'react';
 import { navigate } from 'gatsby';
-import { ApolloProvider } from 'react-apollo';
-import { Rehydrated } from 'aws-appsync-react';
 
-import client from './src/utils/aws-appsync-client';
-import IsLoggedIn from './src/utils/is-logged-in';
-
+import wrapRootElement from './src/utils/wrap-root-element';
 import './src/styles/styles.sass';
 
 const ELEMENT_ID = 'gatsby-browser-service-worker-notification';
@@ -35,10 +30,4 @@ export const onServiceWorkerUpdateFound = () => addProgressBar();
 export const onServiceWorkerUpdateReady = () =>
   navigate(window.location.pathname);
 
-export const wrapRootElement = ({ element }) => (
-  <ApolloProvider client={client}>
-    <Rehydrated>
-      <IsLoggedIn element={element} />
-    </Rehydrated>
-  </ApolloProvider>
-);
+export { wrapRootElement };

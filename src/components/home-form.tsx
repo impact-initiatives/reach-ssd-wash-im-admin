@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Storage from '@aws-amplify/storage';
-import Auth from '@aws-amplify/auth';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import jwtDecode from 'jwt-decode';
 
-import exports from '../config/exports';
+import { GET_HOME_PAGE, UPDATE_HOME_PAGE } from '../config/graphql';
+import { getToken } from '../utils/wrap-root-element';
 
 interface State {
   input: string;
@@ -21,50 +22,56 @@ const onChange = (e: React.FormEvent, setState: Function) => {
   setState((state: State) => ({ ...state, input }));
 };
 
-const onSubmit = (e: React.FormEvent<HTMLFormElement>, setState: Function) => {
+const onSubmit = (
+  e: React.FormEvent<HTMLFormElement>,
+  setState: Function,
+  updateHomePage: Function,
+) => {
   e.preventDefault();
   const { value } = e.currentTarget.elements.markdown;
   if (value) {
-    Storage.put('home-page.md', value, {
-      customPrefix: { public: 'markdown/' },
-      contentType: 'text/markdown',
-    }).then(() => {
-      fetch(exports.netlify.buildHook, { method: 'POST' });
-      setState((state: State) => ({ ...state, edit: false }));
-    });
+    updateHomePage({ variables: { markdown: value } });
+    setState((state: State) => ({ ...state, edit: false }));
   }
 };
 
-const componentDidMount = (
+const updateMarkdown = (
   textareaElement: HTMLTextAreaElement | null,
   setState: Function,
+  data: any,
 ) => {
-  Storage.get('home-page.md', {
-    customPrefix: { public: 'markdown/' },
-    download: true,
-  }).then(response => {
-    const body = response.Body.toString();
+  if (data) {
+    const body = data.getHomePage.markdown;
     const input = DOMPurify.sanitize(marked(body));
     if (textareaElement) textareaElement.value = body;
     setState((state: State) => ({ ...state, input }));
-  });
-  Auth.currentSession()
-    .then(session => {
-      const groups = session.getIdToken().payload['cognito:groups'];
-      const admin = Boolean(groups && groups.includes('Admin'));
+  }
+};
+
+const componentDidMount = (setState: Function) => {
+  getToken
+    .then(token => {
+      const admin = Boolean(
+        token && jwtDecode(token).permissions.includes('admin'),
+      );
       setState((state: State) => ({ ...state, admin }));
     })
-    .catch(() => {});
+    .catch(() => setState((state: State) => ({ ...state, admin: false })));
 };
 
 const IndexPage = () => {
+  const { data } = useQuery(GET_HOME_PAGE);
+  const [updateHomePage] = useMutation(UPDATE_HOME_PAGE);
   const [state, setState] = useState({ input: '', edit: false, admin: false });
   const textareaElement = useRef<HTMLTextAreaElement>(null);
-  useEffect(() => componentDidMount(textareaElement.current, setState), []);
+  useEffect(() => updateMarkdown(textareaElement.current, setState, data), [
+    data,
+  ]);
+  useEffect(() => componentDidMount(setState), []);
   const isHidden = state.admin && state.edit ? '' : ' is-hidden';
   const isHiddenEdit = state.admin && !state.edit ? '' : ' is-hidden';
   return (
-    <form onSubmit={e => onSubmit(e, setState)}>
+    <form onSubmit={e => onSubmit(e, setState, updateHomePage)}>
       <div className={`field buttons${isHidden}`}>
         <button
           className="button is-rounded is-link"

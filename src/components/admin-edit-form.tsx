@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
-import Auth from '@aws-amplify/auth';
+import { useMutation } from '@apollo/react-hooks';
+import jwtDecode from 'jwt-decode';
 
 import getFormType, { selectOne } from '../utils/get-form-type';
-import schema, { schemaStatus } from '../config/graphql-schema';
+import schema, { schemaStatus } from '../config/schema';
+import { UPDATE_DOCUMENT } from '../config/graphql';
 import handleSubmit from '../utils/upload-functions';
+import { getToken } from '../utils/wrap-root-element';
 
 interface Props {
   loading: boolean;
@@ -17,21 +20,22 @@ interface State {
 }
 
 const componentDidMount = (setState: Function) => {
-  Auth.currentSession()
-    .then(session => {
-      const groups = session.getIdToken().payload['cognito:groups'];
-      const admin = Boolean(groups && groups.includes('Admin'));
+  getToken
+    .then(accessToken => {
+      const token = jwtDecode(accessToken);
+      const admin = Boolean(token && token.permissions.includes('admin'));
       setState((state: State) => ({ ...state, admin }));
     })
     .catch(() => {});
 };
 
-const AdminEditForm = ({ loading, data }: Props) => {
+const AdminEditForm = ({ data }: Props) => {
   const [state, setState] = useState({ loading: false, admin: false });
+  const [updateDocument] = useMutation(UPDATE_DOCUMENT);
   useEffect(() => componentDidMount(setState), []);
   const loadingClass = state.loading ? ' is-loading' : '';
   return (
-    <form onSubmit={e => handleSubmit(e, setState, data)}>
+    <form onSubmit={e => handleSubmit(e, setState, updateDocument, data)}>
       {Object.keys(schema).map(groupKey =>
         Object.keys(schema[groupKey]).map(key =>
           getFormType(groupKey, key, data),

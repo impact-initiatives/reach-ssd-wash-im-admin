@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { navigate } from 'gatsby';
+import { useMutation } from '@apollo/react-hooks';
 
 import getFormType from '../utils/get-form-type';
-import schema from '../config/graphql-schema';
+import schema from '../config/schema';
+import { CREATE_DOCUMENT } from '../config/graphql';
 import handleSubmit from '../utils/upload-functions';
 
 const UploadForm = () => {
   const [state, setState] = useState({ loading: false, admin: false });
   const loadingClass = state.loading ? ' is-loading' : '';
+  const [createDocument] = useMutation(CREATE_DOCUMENT);
   return (
-    <form onSubmit={e => handleSubmit(e, setState)}>
+    <form onSubmit={e => handleSubmit(e, setState, createDocument)}>
       {Object.keys(schema).map(groupKey =>
         Object.keys(schema[groupKey]).map(key => getFormType(groupKey, key)),
       )}

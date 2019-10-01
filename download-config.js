@@ -2,10 +2,9 @@ require('dotenv').config();
 const https = require('https');
 const fs = require('fs');
 
-const bucket = process.env.AWS_BUCKET;
-const region = 'eu-west-1';
+const repo = process.env.REPO_FOLDER;
 
-const srcPath = `https://s3-${region}.amazonaws.com/${bucket}/config/`;
+const srcPath = `https://raw.githubusercontent.com/impact-initiatives/impact-api/master/src/${repo}/config/`;
 const destPath = 'src/config/';
 
 const downloadFile = name => {
@@ -16,10 +15,9 @@ const downloadFile = name => {
 if (!fs.existsSync(destPath)) fs.mkdirSync(destPath);
 downloadFile('data.d.ts');
 downloadFile('exports.ts');
-downloadFile('graphql-mutations.ts');
-downloadFile('graphql-queries.ts');
-downloadFile('graphql-schema.ts');
+downloadFile('graphql.ts');
 downloadFile('icon.svg');
+downloadFile('schema.ts');
 downloadFile('site.js');
 downloadFile('table-public.tsx');
 downloadFile('table-admin.tsx');

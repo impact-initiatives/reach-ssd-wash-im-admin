@@ -4,10 +4,9 @@ const fs = require('fs');
 
 const site = require('./src/config/site.js');
 
-const bucket = process.env.AWS_BUCKET;
-const region = 'eu-west-1';
+const repo = process.env.REPO_FOLDER;
 
-const srcPath = `https://s3-${region}.amazonaws.com/${bucket}/config/`;
+const srcPath = `https://raw.githubusercontent.com/impact-initiatives/impact-api/master/src/${repo}/config/`;
 const destPath = 'src/config/';
 
 const downloadFile = name => {

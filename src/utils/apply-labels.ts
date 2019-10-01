@@ -1,4 +1,4 @@
-import schema, { typeLookup, labeledDataTpl } from '../config/graphql-schema';
+import schema, { typeLookup, labeledDataTpl } from '../config/schema';
 
 const schemaLabelsTpl: StringLookup = {};
 

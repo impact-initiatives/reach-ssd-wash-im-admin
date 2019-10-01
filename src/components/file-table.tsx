@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTable, FaFilter } from 'react-icons/fa';
 
 import Table from './table';
 import TableFilter from './table-filter';
-import schema, { typeLookup } from '../config/graphql-schema';
+import schema, { typeLookup } from '../config/schema';
 import { tableHeader, tableBody } from '../config/table-public';
 
 interface Props {
@@ -14,9 +14,14 @@ interface Props {
 const onChangeTab = (setTab: Function, table: boolean, filter: boolean) =>
   setTab({ table, filter });
 
+const dataUpdated = (data, setState) => {
+  setState(state => ({ ...state, edges: data }));
+};
+
 const FileTable = ({ data }: Props) => {
   const [state, setState] = useState({ edges: data, filters: {} });
   const [tab, setTab] = useState({ table: true, filter: false });
+  useEffect(() => dataUpdated(data, setState), [data]);
   return (
     <div>
       <div className="tabs is-centered is-toggle is-toggle-rounded">

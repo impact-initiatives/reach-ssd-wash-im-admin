@@ -2,7 +2,7 @@ const site = require('./src/config/site');
 
 module.exports = {
   siteMetadata: {
-    title: site.nameAdmin,
+    title: site.name,
     description: site.description,
     author: '@maxmalynowsky',
   },
@@ -23,8 +23,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: site.nameAdmin,
-        short_name: site.nameShortAdmin,
+        name: site.name,
+        short_name: site.nameShort,
         start_url: '/',
         background_color: '#FFFFFF',
         theme_color: site.themeColor,
