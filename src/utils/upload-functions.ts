@@ -1,4 +1,7 @@
+import { navigate } from 'gatsby';
+
 import schema, { schemaHidden } from '../config/schema';
+import { LIST_DOCUMENTS } from '../config/graphql';
 import exports from '../config/exports';
 import { getToken } from './wrap-root-element';
 
@@ -89,7 +92,7 @@ const handleSubmit = async (
           variables: { ...schemaHidden, ...values, id: data.id },
         });
         setState((state: State) => ({ ...state, loading: false }));
-        window.location.assign('/admin');
+        navigate('/admin');
       } catch (e) {
         setState((state: State) => ({ ...state, loading: false }));
       }
@@ -102,9 +105,12 @@ const handleSubmit = async (
       const accessToken = await getToken;
       await uploadFile(file, `${year}/${month}`, accessToken);
       try {
-        await mutation({ variables: { ...schemaHidden, ...values } });
+        await mutation({
+          variables: { ...schemaHidden, ...values },
+          refetchQueries: [{ query: LIST_DOCUMENTS }],
+        });
         setState((state: State) => ({ ...state, loading: false }));
-        window.location.assign('/admin');
+        navigate('/admin');
       } catch (e) {
         setState((state: State) => ({ ...state, loading: false }));
       }
@@ -118,7 +124,7 @@ const handleSubmit = async (
         variables: { ...schemaHidden, ...values, id: data.id },
       });
       setState((state: State) => ({ ...state, loading: false }));
-      window.location.assign('/admin');
+      navigate('/admin');
     } catch (e) {
       setState((state: State) => ({ ...state, loading: false }));
     }
