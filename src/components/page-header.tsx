@@ -92,7 +92,7 @@ const PageHeader = ({ tab }: Props) => {
               {!isAuthenticated && (
                 <button
                   className="button is-primary is-rounded"
-                  onClick={() => loginWithRedirect({})}
+                  onClick={() => loginWithRedirect()}
                 >
                   Log in
                 </button>
