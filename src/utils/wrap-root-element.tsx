@@ -27,7 +27,7 @@ const getToken = new Promise((resolve, reject) => {
 const cache = new InMemoryCache();
 if (typeof window !== 'undefined')
   persistCache({ cache, storage: window.localStorage });
-const httpOptions = { uri: exports.apollo.uri, useGETForQueries: true };
+const httpOptions = { uri: exports.apollo.uri };
 const httpLink = createHttpLink(httpOptions);
 const queryLink = createPersistedQueryLink({ useGETForHashedQueries: true });
 const authLink = setContext((_, { headers }) =>
