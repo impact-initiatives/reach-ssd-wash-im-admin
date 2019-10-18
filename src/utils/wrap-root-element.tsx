@@ -50,22 +50,33 @@ const onRedirectCallback = appState => {
   );
 };
 
-const auth0Loaded = (loading: Boolean, getTokenSilently: Function) => {
-  if (!loading)
+const auth0Loaded = (
+  loading: Boolean,
+  getTokenSilently: Function,
+  isAuthenticated: boolean,
+  loginWithRedirect: Function,
+) => {
+  if (!loading) {
     getTokenSilently()
       .then((accessToken: string) => resolveToken(accessToken))
       .catch(rejectToken);
+    if (!exports.apollo.files && !isAuthenticated) loginWithRedirect();
+  }
 };
 
 const Loading = ({ element }: Props) => {
-  const { loading, getTokenSilently } = useAuth0();
+  const {
+    loading,
+    getTokenSilently,
+    isAuthenticated,
+    loginWithRedirect,
+  } = useAuth0();
   const fetchPolicy = 'cache-and-network';
   useQuery(GET_HOME_PAGE, { fetchPolicy });
   useQuery(LIST_DOCUMENTS, { fetchPolicy });
-  useEffect(() => auth0Loaded(loading, getTokenSilently), [
-    getTokenSilently,
-    loading,
-  ]);
+  useEffect(() => {
+    auth0Loaded(loading, getTokenSilently, isAuthenticated, loginWithRedirect);
+  }, [loading, getTokenSilently, loginWithRedirect, isAuthenticated]);
   return element;
 };
 

@@ -14,7 +14,7 @@ interface Exports {
   },
   apollo: {
     uri: string,
-    files: string,
+    files: string | null,
   },
   site: {
     title: string;
