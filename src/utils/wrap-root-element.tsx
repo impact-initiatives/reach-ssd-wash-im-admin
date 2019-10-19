@@ -95,4 +95,4 @@ const wrapRootElement = ({ element }: Props) => (
 );
 
 export default wrapRootElement;
-export { getToken };
+export { getToken, client };

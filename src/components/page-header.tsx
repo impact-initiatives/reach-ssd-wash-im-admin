@@ -3,6 +3,7 @@ import { Link } from 'gatsby';
 
 import logo from '../config/icon.svg';
 import { useAuth0 } from '../utils/react-auth0-wrapper';
+import { client } from '../utils/wrap-root-element';
 
 interface Props {
   tab: string;
@@ -100,7 +101,7 @@ const PageHeader = ({ tab }: Props) => {
               {isAuthenticated && (
                 <button
                   className="button is-primary is-rounded"
-                  onClick={() => logout()}
+                  onClick={() => client.clearStore().then(() => logout())}
                 >
                   Log out
                 </button>
