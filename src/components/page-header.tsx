@@ -101,7 +101,12 @@ const PageHeader = ({ tab }: Props) => {
               {isAuthenticated && (
                 <button
                   className="button is-primary is-rounded"
-                  onClick={() => client.clearStore().then(() => logout())}
+                  onClick={() =>
+                    client.clearStore().then(() => {
+                      window.localStorage.clear();
+                      logout();
+                    })
+                  }
                 >
                   Log out
                 </button>
