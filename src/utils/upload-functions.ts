@@ -25,6 +25,23 @@ const uploadFile = (file: File, subfolder: string, accessToken: string) => {
   });
 };
 
+export const downloadFile = (file: string) => {
+  getToken.then(accessToken => {
+    fetch(exports.apollo.uri + '-files?file=' + file, {
+      method: 'GET',
+      headers: { Authorization: 'Bearer ' + accessToken },
+    })
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = file.substring(8);
+        link.click();
+      });
+  });
+};
+
 const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>,
   setState: Function,

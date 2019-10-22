@@ -4,6 +4,7 @@ import { FaUpload } from 'react-icons/fa';
 import schema, { dataTpl } from '../config/schema';
 import exports from '../config/exports';
 import SelectMultiple from '../components/select-multiple';
+import { downloadFile } from './upload-functions';
 
 const onChange = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -12,6 +13,21 @@ const onChange = (
   if (e.currentTarget.files && e.currentTarget.files[0] && uploadDiv) {
     uploadDiv.innerHTML = e.currentTarget.files[0].name;
   }
+};
+
+const getLink = (defaultValue: string) => {
+  if (exports.apollo.files) {
+    return (
+      <a href={exports.apollo.files + defaultValue}>
+        {defaultValue.substring(8)}
+      </a>
+    );
+  }
+  return (
+    <a href={'#' + defaultValue} onClick={() => downloadFile(defaultValue)}>
+      {defaultValue.substring(8)}
+    </a>
+  );
 };
 
 const upload = (key: string, value: Input, defaultValue: string) => {
@@ -41,13 +57,7 @@ const upload = (key: string, value: Input, defaultValue: string) => {
               <span className="file-label">Choose a file…</span>
             </span>
             <span className="file-name" ref={uploadDiv}>
-              {defaultValue ? (
-                <a href={exports.apollo.files + defaultValue}>
-                  {defaultValue.substring(8)}
-                </a>
-              ) : (
-                'No file chosen'
-              )}
+              {defaultValue ? getLink(defaultValue) : 'No file chosen'}
             </span>
           </label>
         </div>
