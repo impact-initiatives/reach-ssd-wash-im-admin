@@ -7,7 +7,6 @@ import AdminEditForm from '../../components/admin-edit-form';
 import PageHeader from '../../components/page-header';
 import PageFooter from '../../components/page-footer';
 import { LIST_DOCUMENTS } from '../../config/graphql';
-import { dataTpl } from '../../config/schema';
 import { useAuth0 } from '../../utils/react-auth0-wrapper';
 
 const componentDidMount = (
@@ -35,7 +34,7 @@ const UploadPage = () => {
         <div className="container is-tablet">
           {id ? (
             <AdminEditForm
-              data={data.listDocuments.find(d => d.id === id) || dataTpl}
+              data={data.listDocuments.find(d => d.id === id)}
               loading={loading}
             />
           ) : null}

@@ -8,7 +8,7 @@ import SEO from '../components/seo';
 import { LIST_DOCUMENTS } from '../config/graphql';
 import applyLabels from '../utils/apply-labels';
 
-const sort = (a: Data, b: Data): number => b.createdAt - a.createdAt;
+const sort = (a: Data, b: Data): number => b.endDate.localeCompare(a.endDate);
 
 const FilesPage = () => {
   const { data } = useQuery(LIST_DOCUMENTS);
@@ -23,7 +23,7 @@ const FilesPage = () => {
               data && data.listDocuments
                 ? applyLabels(
                     data.listDocuments
-                      .filter((d: LabeledData) => d.status === 'PUBLISHED')
+                      .filter((d: Data) => d.status === 'PUBLISHED')
                       .sort(sort),
                   )
                 : []

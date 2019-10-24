@@ -13,7 +13,6 @@ const downloadFile = name => {
 };
 
 if (!fs.existsSync(destPath)) fs.mkdirSync(destPath);
-downloadFile('data.d.ts');
 downloadFile('exports.ts');
 downloadFile('graphql.ts');
 downloadFile('icon.svg');

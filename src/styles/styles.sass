@@ -9,20 +9,6 @@ html
   &.is-tablet
     max-width: $tablet - (2 * $gap)
 
-// hide scrollbar when not required
-.select
-  select[multiple]
-    overflow: auto
-    option::before
-      content: "\2610"
-      padding-right: 0.5rem
-    option:checked::before
-      content: "\2611"
-
-.select:not(.multiple)
-  select:invalid:not([multiple])
-    color: $grey-light
-
 // Make table narrow on mobile
 .table
   +mobile
@@ -30,22 +16,10 @@ html
     th
       padding: 0.25em 0.5em
 
-// Apply special styling to select multiple component
-.box
-  .modal:not(.is-active)
-    display: initial
-    position: absolute
-    z-index: 0
-    opacity: 0
-  .modal:not(.is-active).ua-mobile
-    z-index: 1
-    .modal-card
-      height: 100%
-      margin-left: 0
-      .select.is-multiple
-        height: 100%
-        select
-          height: 100%
+// Admin Checkbox styling
+.impact-cms-nested-checkbox
+  input[type=checkbox]:not(:checked) ~ div
+    display: none
 
 // loading bar for service worker notifications
 .progress.is-primary.is-small.is-fixed-top:indeterminate
@@ -57,15 +31,8 @@ html
   top: 0
   z-index: 41
 
-// full-sized tableau maps
-.tableau-map-container
-  height: 100vh
-  width: 100%
-  max-width: 1200px
-  max-height: 900px
-  margin: auto
-
-.textarea.field-maps-sticky-textarea
+// Make the home page editor sticky
+.textarea.impact-cms-sticky-textarea
   min-height: 85vh
   position: sticky
   top: 1rem

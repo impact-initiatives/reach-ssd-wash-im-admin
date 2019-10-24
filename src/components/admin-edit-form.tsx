@@ -3,8 +3,14 @@ import { navigate } from 'gatsby';
 import { useMutation } from '@apollo/react-hooks';
 import jwtDecode from 'jwt-decode';
 
-import getFormType, { selectOne } from '../utils/get-form-type';
-import schema, { schemaStatus } from '../config/schema';
+import {
+  UploadField,
+  TitleField,
+  EndDateField,
+  AdminField,
+} from '../utils/get-form-defaults';
+import { SelectOne, SelectMultiple } from '../utils/get-form-type';
+import { schemaTags } from '../config/schema';
 import { UPDATE_DOCUMENT } from '../config/graphql';
 import handleSubmit from '../utils/upload-functions';
 import { getToken } from '../utils/wrap-root-element';
@@ -18,6 +24,12 @@ interface State {
   loading: boolean;
   admin: boolean;
 }
+
+const statusOptions = [
+  { value: 'DRAFT', label: 'Draft' },
+  { value: 'PUBLISHED', label: 'Published' },
+  { value: 'DELETE', label: 'Delete' },
+];
 
 const componentDidMount = (setState: Function) => {
   getToken
@@ -36,17 +48,40 @@ const AdminEditForm = ({ data }: Props) => {
   const loadingClass = state.loading ? ' is-loading' : '';
   return (
     <form onSubmit={e => handleSubmit(e, setState, updateDocument, data)}>
-      {Object.keys(schema).map(groupKey =>
-        Object.keys(schema[groupKey]).map(key =>
-          getFormType(groupKey, key, data),
+      <UploadField defaultValue={data.file} />
+      <TitleField defaultValue={data.title} />
+      <EndDateField defaultValue={data.endDate} />
+      {schemaTags.map(({ value, label, multiple, options }) =>
+        multiple ? (
+          <SelectMultiple
+            key={value}
+            value={value}
+            label={label}
+            options={options}
+            defaultValue={data[value]}
+          />
+        ) : (
+          <SelectOne
+            key={value}
+            value={value}
+            label={label}
+            options={options}
+            defaultValue={data[value]}
+          />
         ),
       )}
+      <AdminField defaultAdmin1={data.admin1} defaultAdmin2={data.admin2} />
       {state.admin ? (
         <div>
           <hr />
           <div className="box has-background-warning">
             <h5 className="title is-5">Admin Controls</h5>
-            {selectOne('status', schemaStatus, data.status)}
+            <SelectOne
+              value="status"
+              label="Status"
+              options={statusOptions}
+              defaultValue={data.status}
+            />
           </div>
         </div>
       ) : (

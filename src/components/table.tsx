@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import TablePagination from './table-pagination';
 
@@ -7,13 +7,21 @@ interface Props {
   data: LabeledData[];
   tableHeader: any;
   tableBody: any;
+  page: number;
+  setPage: Function;
 }
 
 const PER_PAGE = 20;
 
-const Table = ({ className, data, tableHeader, tableBody }: Props) => {
-  const [state, setState] = useState({ page: 1 });
-  const start = PER_PAGE * (state.page - 1);
+const Table = ({
+  className,
+  data,
+  tableHeader,
+  tableBody,
+  page,
+  setPage,
+}: Props) => {
+  const start = PER_PAGE * (page - 1);
   const end = PER_PAGE + start;
   const pageData = data.slice(start, end);
   const pageCount = Math.ceil(data.length / PER_PAGE);
@@ -31,11 +39,7 @@ const Table = ({ className, data, tableHeader, tableBody }: Props) => {
           <tbody>{tableBody(pageData)}</tbody>
         </table>
       </div>
-      <TablePagination
-        state={state}
-        setState={setState}
-        pageCount={pageCount}
-      />
+      <TablePagination page={page} setPage={setPage} pageCount={pageCount} />
     </div>
   );
 };

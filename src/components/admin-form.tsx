@@ -15,6 +15,7 @@ const onChangeTab = (setState: Function, draft: boolean, published: boolean) =>
 
 const AdminForm = ({ loading, data }: Props) => {
   const [state, setState] = useState({ published: false, draft: true });
+  const [page, setPage] = useState(1);
   const dataFiltered = state.draft
     ? data.filter(d => d.status === 'DRAFT')
     : data.filter(d => d.status === 'PUBLISHED');
@@ -47,9 +48,12 @@ const AdminForm = ({ loading, data }: Props) => {
         </ul>
       </div>
       <Table
+        className=""
         data={dataFiltered}
         tableHeader={tableHeader}
         tableBody={tableBody}
+        page={page}
+        setPage={setPage}
       />
     </div>
   );

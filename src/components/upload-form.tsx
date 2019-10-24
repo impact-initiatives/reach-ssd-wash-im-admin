@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { navigate } from 'gatsby';
 import { useMutation } from '@apollo/react-hooks';
 
-import getFormType from '../utils/get-form-type';
-import schema from '../config/schema';
+import {
+  UploadField,
+  TitleField,
+  EndDateField,
+  AdminField,
+} from '../utils/get-form-defaults';
+import { SelectOne, SelectMultiple } from '../utils/get-form-type';
+import { schemaTags } from '../config/schema';
 import { CREATE_DOCUMENT } from '../config/graphql';
 import handleSubmit from '../utils/upload-functions';
 
@@ -13,9 +19,27 @@ const UploadForm = () => {
   const [createDocument] = useMutation(CREATE_DOCUMENT);
   return (
     <form onSubmit={e => handleSubmit(e, setState, createDocument)}>
-      {Object.keys(schema).map(groupKey =>
-        Object.keys(schema[groupKey]).map(key => getFormType(groupKey, key)),
+      <UploadField />
+      <TitleField />
+      <EndDateField />
+      {schemaTags.map(({ value, label, multiple, options }) =>
+        multiple ? (
+          <SelectMultiple
+            key={value}
+            value={value}
+            label={label}
+            options={options}
+          />
+        ) : (
+          <SelectOne
+            key={value}
+            value={value}
+            label={label}
+            options={options}
+          />
+        ),
       )}
+      <AdminField />
       <br />
       <div className="field is-grouped is-grouped-right">
         <div className="control">

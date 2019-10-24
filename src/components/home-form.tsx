@@ -94,7 +94,7 @@ const IndexPage = () => {
       <div className="columns is-desktop">
         <div className={`column${isHidden}`}>
           <textarea
-            className="textarea has-fixed-size field-maps-sticky-textarea"
+            className="textarea has-fixed-size impact-cms-sticky-textarea"
             name="markdown"
             ref={textareaElement}
             onChange={e => onChange(e, setState)}

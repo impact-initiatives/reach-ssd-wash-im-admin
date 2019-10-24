@@ -1,52 +1,38 @@
-interface StringLookup {
-  [key: string]: string;
-}
-
-interface Input {
+interface Select {
   label: string;
-  required: boolean;
-}
-
-interface Select extends Input {
   options: {
     [key: string]: string;
   };
 }
 
-interface SelectGrouped extends Input {
-  options: {
-    [key: string]: {
-      [key: string]: string;
-    };
-  };
-  submit: {
-    [key: string]: {
-      [key: string]: string;
-    };
-  };
+interface SelectTagOption {
+  value: string;
+  label: string;
+  title?: string;
 }
 
-interface Schema {
-  upload: {
-    [key: string]: Input;
-  };
-  input: {
-    [key: string]: Input;
-  };
-  selectOne: {
-    [key: string]: Select;
-  };
-  selectMultiple: {
-    [key: string]: Select;
-  };
-  selectMultipleGrouped: {
-    [key: string]: SelectGrouped;
-  };
-  [key: string]: {
-    [key: string]: Input | Select | SelectGrouped;
-  };
+interface SchemaTag {
+  value: string;
+  label: string;
+  multiple: boolean;
+  options: SelectTagOption[];
 }
 
-interface SchemaHidden {
-  [key: string]: string | string[];
+interface Admin0 {
+  label: string;
+  value: string;
+}
+
+interface Admin1 extends Admin0 {
+  admin0: string;
+}
+
+interface Admin2 extends Admin1 {
+  admin1: string;
+}
+
+interface SchemaAdmin {
+  admin0: Admin0[];
+  admin1: Admin1[];
+  admin2: Admin2[];
 }

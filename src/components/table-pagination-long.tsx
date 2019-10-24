@@ -1,15 +1,12 @@
 import React from 'react';
 
 interface Props {
-  state: {
-    page: number;
-  };
-  setState: Function;
+  page: number;
+  setPage: Function;
   pageCount: number;
 }
 
-const TablePaginationLong = ({ state, setState, pageCount }: Props) => {
-  const { page } = state;
+const TablePaginationLong = ({ page, setPage, pageCount }: Props) => {
   const firstButton = Math.min(Math.max(2, page - 1), pageCount - 3);
   const secondButton = Math.min(Math.max(3, page), pageCount - 2);
   const thirdButton = Math.min(Math.max(4, page + 1), pageCount - 1);
@@ -23,7 +20,7 @@ const TablePaginationLong = ({ state, setState, pageCount }: Props) => {
       <li>
         <button
           className={`button pagination-link${isCurrentFirst}`}
-          onClick={() => setState({ page: 1 })}
+          onClick={() => setPage(1)}
         >
           1
         </button>
@@ -36,7 +33,7 @@ const TablePaginationLong = ({ state, setState, pageCount }: Props) => {
       <li>
         <button
           className={`button pagination-link${isCurrentSet1}`}
-          onClick={() => setState({ page: firstButton })}
+          onClick={() => setPage(firstButton)}
         >
           {firstButton}
         </button>
@@ -44,7 +41,7 @@ const TablePaginationLong = ({ state, setState, pageCount }: Props) => {
       <li>
         <button
           className={`button pagination-link${isCurrentSet2}`}
-          onClick={() => setState({ page: secondButton })}
+          onClick={() => setPage(secondButton)}
         >
           {secondButton}
         </button>
@@ -52,7 +49,7 @@ const TablePaginationLong = ({ state, setState, pageCount }: Props) => {
       <li>
         <button
           className={`button pagination-link${isCurrentSet3}`}
-          onClick={() => setState({ page: thirdButton })}
+          onClick={() => setPage(thirdButton)}
         >
           {thirdButton}
         </button>
@@ -65,7 +62,7 @@ const TablePaginationLong = ({ state, setState, pageCount }: Props) => {
       <li>
         <button
           className={`button pagination-link${isCurrentLast}`}
-          onClick={() => setState({ page: pageCount })}
+          onClick={() => setPage(pageCount)}
         >
           {pageCount}
         </button>

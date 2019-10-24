@@ -1,59 +1,34 @@
-import schema, { typeLookup, labeledDataTpl } from '../config/schema';
-
-const schemaLabelsTpl: StringLookup = {};
-
-const reduceEntriesToLabeledData = (
-  acc: LabeledData,
-  [key, value]: [string, LabeledDataProp],
-): LabeledData => ({ ...acc, [key]: value });
-
-const reduceEntriesToObject = (
-  acc: StringLookup,
-  [key, value]: [string, string],
-): StringLookup => ({ ...acc, [key]: value });
+import { schemaTags, schemaAdmin } from '../config/schema';
 
 const applyLabels = (documents: Data[]): LabeledData[] =>
   documents.map(node =>
-    Object.entries(node)
-      .map(mapEntries)
-      .reduce(reduceEntriesToLabeledData, labeledDataTpl),
+    Object.fromEntries(Object.entries(node).map(mapEntries)),
   );
 
 const mapEntries = ([key, value]: [string, DataProp]): [
   string,
   LabeledDataProp,
 ] => {
-  if (typeLookup[key] === 'selectOne' && typeof value === 'string')
-    return [key, { label: schema.selectOne[key].options[value], value }];
-  if (
-    typeLookup[key] === 'selectMultiple' &&
-    typeof value !== 'string' &&
-    typeof value !== 'number'
-  ) {
-    const selectMultipleValues = value.map(value2 => ({
-      label: schema.selectMultiple[key].options[value2],
-      value: value2,
-    }));
-    return [key, selectMultipleValues];
+  if (['admin0', 'admin1', 'admin2'].includes(key)) {
+    const labeledValue = value.map(item =>
+      schemaAdmin[key].find(option => option.value === item),
+    );
+    return [key, labeledValue];
   }
-  if (
-    typeLookup[key] === 'selectMultipleGrouped' &&
-    typeof value !== 'string' &&
-    typeof value !== 'number'
-  ) {
-    const selectMultipleGroupedValues = value.map(value2 => {
-      const schemaLabels = Object.values(
-        schema.selectMultipleGrouped[key].options,
-      )
-        .flatMap(e => Object.entries(e))
-        .reduce(reduceEntriesToObject, schemaLabelsTpl);
-      return { label: schemaLabels[value2], value: value2 };
-    });
-    return [key, selectMultipleGroupedValues];
+  const tag = schemaTags.find(item => item.value === key);
+  if (tag) {
+    if (typeof value === 'string') {
+      const labeledValue = tag.options.find(option => option.value === value);
+      return [key, labeledValue];
+    }
+    if (typeof value === 'object') {
+      const labeledValue = value.map(item =>
+        tag.options.find(option => option.value === item),
+      );
+      return [key, labeledValue];
+    }
   }
-  if (typeof value === 'string' || typeof value === 'number')
-    return [key, value];
-  return [key, ''];
+  return [key, value];
 };
 
 export default applyLabels;

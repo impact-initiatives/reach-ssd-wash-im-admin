@@ -1,32 +1,29 @@
 import React from 'react';
 
-import SelectMultiple from './select-multiple';
-
-interface Props {
-  name: string;
-  value: Select | SelectGrouped;
-  state: State;
-  setState: Function;
-  data: LabeledData[];
-}
+import { SelectMultiple } from '../utils/get-form-type';
+import { AdminField } from '../utils/get-form-defaults';
+import { schemaTags } from '../config/schema';
 
 interface Filter {
   [key: string]: string[];
 }
 
-interface State {
-  filters: Filter;
-  edges: LabeledData[];
+interface Props {
+  className: string;
+  setState: Function;
+  setTab: Function;
+  setPage: Function;
+  data: LabeledData[];
 }
 
 const makeArray = (value: LabeledDataProp) =>
   Array.isArray(value) ? value : [value];
 
-const applyFilter = (edges: LabeledData[], filters: Filter) => {
+const applyFilter = (data: LabeledData[], filters: Filter) => {
   const filterEntries = Object.entries(filters);
-  return edges.filter(edge =>
+  return data.filter(item =>
     filterEntries.every(([key, value]) => {
-      const edgeValues = makeArray(edge[key]);
+      const edgeValues = makeArray(item[key]);
       return edgeValues.some(v =>
         typeof v !== 'string' && typeof v !== 'number'
           ? value.includes(v.value)
@@ -36,38 +33,39 @@ const applyFilter = (edges: LabeledData[], filters: Filter) => {
   );
 };
 
-const filter = (
-  selectElement: HTMLSelectElement,
-  type: string,
-  state: State,
-  setState: Function,
-  data: LabeledData[],
-) => {
-  const options = [];
-  for (const option of Array.from(selectElement.selectedOptions))
-    options.push(option.value);
-  const { [type]: oldOptions, ...otherFilters } = state.filters;
-  const filters = options.length
-    ? { ...otherFilters, [type]: options }
-    : otherFilters;
-  const filteredEdges = applyFilter(data, filters);
-  setState(() => ({ edges: filteredEdges, filters }));
+const handleSubmit = (e, data, setState, setTab, setPage) => {
+  e.preventDefault();
+  const values = {};
+  for (const [key, value] of new FormData(e.currentTarget).entries()) {
+    values[key] = values[key] ? [...values[key], value] : [value];
+  }
+  const filteredEdges = applyFilter(data, values);
+  setState(() => ({ edges: filteredEdges }));
+  setTab({ table: true, filter: false });
+  setPage(1);
 };
 
-const TableFilter = ({ name, value, state, setState, data }: Props) => (
-  <div className="field" key={name}>
-    <label className="label" htmlFor={name}>
-      {value.label}
-    </label>
-    <div className="control">
+const TableFilter = ({ className, setState, setTab, setPage, data }: Props) => (
+  <form
+    className={className}
+    onSubmit={e => handleSubmit(e, data, setState, setTab, setPage)}
+  >
+    {schemaTags.map(({ value, label, options }) => (
       <SelectMultiple
-        name={name}
+        key={value}
         value={value}
-        onChangeFunc={filter}
-        onChangeArgs={[name, state, setState, data]}
+        label={label}
+        options={options}
       />
+    ))}
+    <AdminField />
+    <br />
+    <div className="field is-grouped is-grouped-right">
+      <div className="control">
+        <button className="button is-link is-rounded">Apply</button>
+      </div>
     </div>
-  </div>
+  </form>
 );
 
 export default TableFilter;
