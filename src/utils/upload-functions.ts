@@ -66,7 +66,6 @@ const handleSubmit = async (
     } else values[key] = value;
   }
   if (data && !values.file) values.file = data.file;
-  setState((state: State) => ({ ...state, loading: false }));
   if (file.size && data) {
     try {
       const accessToken = await getToken;
