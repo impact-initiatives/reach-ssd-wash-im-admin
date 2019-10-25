@@ -21,7 +21,7 @@ const componentDidMount = (loadingAuth: boolean, isAuthenticated: boolean) => {
   if (!loadingAuth && !isAuthenticated) navigate('/');
 };
 
-const sort = (a: Data, b: Data): number => b.updatedAt - a.updatedAt;
+const sort = (a: Data, b: Data): number => b.endDate.localeCompare(a.endDate);
 
 const AdminPage = () => {
   const { loading, data } = useQuery(LIST_DOCUMENTS);
