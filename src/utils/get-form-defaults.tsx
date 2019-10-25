@@ -32,7 +32,7 @@ const getLink = (defaultValue: string) => {
     );
   }
   return (
-    <a onClick={() => downloadFile(defaultValue)}>
+    <a href={'#' + defaultValue} onClick={() => downloadFile(defaultValue)}>
       {defaultValue.substring(8)}
     </a>
   );
