@@ -58,9 +58,9 @@ const handleSubmit = async (
   for (const [key, value] of new FormData(e.currentTarget).entries()) {
     if (key === 'file') {
       if (value.size) {
-        value.name = value.name.replace(/[^\w.]/g, '_').replace(/_+/g, '_');
-        values.file = `${year}/${month}/${value.name}`;
-        file = value;
+        const file = value;
+        file.name = value.name.replace(/[^\w.]/g, '_').replace(/_+/g, '_');
+        values.file = `${year}/${month}/${file.name}`;
       }
     } else if (typeof values[key] === 'object') {
       values[key] = [...values[key], value];
