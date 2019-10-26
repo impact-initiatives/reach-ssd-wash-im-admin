@@ -25,7 +25,7 @@ const TablePagination = ({ page, setPage, pageCount }: Props) => (
       disabled={page === pageCount}
       onClick={() => setPage(page + 1)}
     >
-      Next page
+      Next
     </button>
     {pageCount <= SHORT_LIST_PAGE_COUNT ? (
       <TablePaginationShort
