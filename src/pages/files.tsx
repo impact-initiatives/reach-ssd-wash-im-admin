@@ -7,8 +7,7 @@ import FileTable from '../components/file-table';
 import SEO from '../components/seo';
 import { LIST_DOCUMENTS } from '../config/graphql';
 import applyLabels from '../utils/apply-labels';
-
-const sort = (a: Data, b: Data): number => b.endDate.localeCompare(a.endDate);
+import sort from '../utils/sort';
 
 const FilesPage = () => {
   const { data } = useQuery(LIST_DOCUMENTS);

@@ -9,6 +9,7 @@ import SEO from '../../components/seo';
 import { LIST_DOCUMENTS } from '../../config/graphql';
 import applyLabels from '../../utils/apply-labels';
 import { useAuth0 } from '../../utils/react-auth0-wrapper';
+import sort from '../../utils/sort';
 
 interface Props {
   loading: boolean;
@@ -20,8 +21,6 @@ interface Props {
 const componentDidMount = (loadingAuth: boolean, isAuthenticated: boolean) => {
   if (!loadingAuth && !isAuthenticated) navigate('/');
 };
-
-const sort = (a: Data, b: Data): number => b.endDate.localeCompare(a.endDate);
 
 const AdminPage = () => {
   const { loading, data } = useQuery(LIST_DOCUMENTS);
