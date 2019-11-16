@@ -34,7 +34,17 @@ module.exports = {
     },
     {
       resolve: 'gatsby-plugin-offline',
-      options: { offlineGoogleAnalytics: true },
+      workboxConfig: {
+        globPatterns: [
+          '**/*.{js,css,html}',
+          'manifest.json',
+          'manifest.webmanifest',
+          'page-data/*/**',
+        ],
+        globIgnores: ['idb-keyval-iife.min.js'],
+        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
+        offlineGoogleAnalytics: true,
+      },
     },
     'gatsby-plugin-netlify',
     'gatsby-plugin-react-helmet',
