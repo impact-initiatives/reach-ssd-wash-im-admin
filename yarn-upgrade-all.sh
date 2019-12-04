@@ -50,3 +50,5 @@ yarn add --dev \
   prettier \
   typescript \
   webpack
+
+yarn upgrade
