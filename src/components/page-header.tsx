@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
+import jwtDecode from 'jwt-decode';
 
 import logo from '../config/icon.svg';
 import { useAuth0 } from '../utils/react-auth0-wrapper';
 import { client } from '../utils/wrap-root-element';
+import { getToken } from '../utils/wrap-root-element';
 
 interface Props {
   tab: string;
@@ -16,10 +18,22 @@ interface State {
 const onClick = (state: State, setState: Function) =>
   setState({ menuOpen: !state.menuOpen });
 
+const componentDidMount = (setState: Function) => {
+  getToken
+    .then(token => {
+      const notadmin = Boolean(
+        token && jwtDecode(token).permissions.includes('notadmin'),
+      );
+      setState((state: State) => ({ ...state, notadmin }));
+    })
+    .catch(() => setState((state: State) => ({ ...state, notadmin: true })));
+};
+
 const PageHeader = ({ tab }: Props) => {
-  const [state, setState] = useState({ menuOpen: false });
+  const [state, setState] = useState({ menuOpen: false, notadmin: true });
   const isActive = state.menuOpen ? ' is-active' : '';
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  useEffect(() => componentDidMount(setState), []);
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -64,7 +78,7 @@ const PageHeader = ({ tab }: Props) => {
           >
             Maps
           </Link>
-          {isAuthenticated && (
+          {isAuthenticated && !state.notadmin && (
             <Link
               className={`navbar-item is-tab${
                 tab === '/upload' ? ' is-active' : ''
@@ -75,7 +89,7 @@ const PageHeader = ({ tab }: Props) => {
               Upload
             </Link>
           )}
-          {isAuthenticated && (
+          {isAuthenticated && !state.notadmin && (
             <Link
               className={`navbar-item is-tab${
                 tab === '/admin' ? ' is-active' : ''
