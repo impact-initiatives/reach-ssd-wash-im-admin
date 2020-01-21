@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FaTable, FaFilter } from 'react-icons/fa';
 
 import Table from './table';
-import TableFilter from './table-filter';
+import TableFilter, { applyFilter } from './table-filter';
 import { tableHeader, tableBody } from '../config/table-public';
 
 interface Props {
@@ -39,11 +39,31 @@ const FilterBar = ({ tab, setTab }) => (
   </div>
 );
 
+const componentDidMount = (setState: Function) => {
+  const { search } = window.location;
+  const searchParams = new URLSearchParams(search);
+  const filter = {};
+  const organizations = searchParams.getAll('organizations');
+  if (organizations.length) filter.organizations = organizations;
+  const documentType = searchParams.getAll('documentType');
+  if (documentType.length) filter.documentType = documentType;
+  const clusters = searchParams.getAll('clusters');
+  if (clusters.length) filter.clusters = clusters;
+  const fileType = searchParams.getAll('fileType');
+  if (fileType.length) filter.fileType = fileType;
+  const admin1 = searchParams.getAll('admin1');
+  if (admin1.length) filter.admin1 = fileType;
+  const admin2 = searchParams.getAll('admin2');
+  if (admin2.length) filter.admin2 = admin2;
+  setState(state => ({ edges: applyFilter(state.edges, filter) }));
+};
+
 const FileTable = ({ data }: Props) => {
-  const [state, setState] = useState({ edges: data, filters: {} });
+  const [state, setState] = useState({ edges: data });
   const [tab, setTab] = useState({ table: true, filter: false });
   const [page, setPage] = useState(1);
   useEffect(() => setState(state => ({ ...state, edges: data })), [data]);
+  useEffect(() => componentDidMount(setState), []);
   return (
     <div>
       <FilterBar tab={tab} setTab={setTab} />

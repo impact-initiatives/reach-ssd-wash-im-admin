@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { navigate } from 'gatsby';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -51,6 +52,15 @@ const updateMarkdown = (
 const componentDidMount = (setState: Function) => {
   getToken
     .then(token => {
+      for (const item of document.getElementsByTagName('a')) {
+        item.addEventListener('click', e => {
+          if (new URL(e.currentTarget.href).origin === window.location.origin) {
+            e.preventDefault();
+            const url = new URL(e.currentTarget.href);
+            navigate(url.pathname + url.search);
+          }
+        });
+      }
       const admin = Boolean(
         token && jwtDecode(token).permissions.includes('admin'),
       );

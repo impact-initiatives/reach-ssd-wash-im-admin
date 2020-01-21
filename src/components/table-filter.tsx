@@ -19,7 +19,7 @@ interface Props {
 const makeArray = (value: LabeledDataProp) =>
   Array.isArray(value) ? value : [value];
 
-const applyFilter = (data: LabeledData[], filters: Filter) => {
+export const applyFilter = (data: LabeledData[], filters: Filter) => {
   const filterEntries = Object.entries(filters);
   return data.filter(item =>
     filterEntries.every(([key, value]) => {
